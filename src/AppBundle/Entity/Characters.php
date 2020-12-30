@@ -48,6 +48,18 @@ class Characters
     private $class;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Alignments")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    private $alignment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Deities")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    private $deity;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="integer")
@@ -432,5 +444,53 @@ class Characters
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * Set alignment.
+     *
+     * @param \AppBundle\Entity\Alignments|null $alignment
+     *
+     * @return Characters
+     */
+    public function setAlignment(\AppBundle\Entity\Alignments $alignment = null)
+    {
+        $this->alignment = $alignment;
+
+        return $this;
+    }
+
+    /**
+     * Get alignment.
+     *
+     * @return \AppBundle\Entity\Alignments|null
+     */
+    public function getAlignment()
+    {
+        return $this->alignment;
+    }
+
+    /**
+     * Set deity.
+     *
+     * @param \AppBundle\Entity\Deities|null $deity
+     *
+     * @return Characters
+     */
+    public function setDeity(\AppBundle\Entity\Deities $deity = null)
+    {
+        $this->deity = $deity;
+
+        return $this;
+    }
+
+    /**
+     * Get deity.
+     *
+     * @return \AppBundle\Entity\Deities|null
+     */
+    public function getDeity()
+    {
+        return $this->deity;
     }
 }

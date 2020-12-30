@@ -1247,28 +1247,4 @@ class DailySpells
     {
         return $this->bonus_spells_9;
     }
-
-    /**
-     * Set character.
-     *
-     * @param \AppBundle\Entity\Characters|null $character
-     *
-     * @return DailySpells
-     */
-    public function setCharacter(\AppBundle\Entity\Characters $character = null)
-    {
-        $this->character = $character;
-
-        return $this;
-    }
-
-    /**
-     * Get character.
-     *
-     * @return \AppBundle\Entity\Characters|null
-     */
-    public function getCharacter()
-    {
-        return $this->character;
-    }
 }

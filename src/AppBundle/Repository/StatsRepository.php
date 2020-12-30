@@ -10,4 +10,7 @@ namespace AppBundle\Repository;
  */
 class StatsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getModifier(int $value) {
+        return floor(($value - 10) / 2);
+    }
 }
