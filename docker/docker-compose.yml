@@ -1,0 +1,74 @@
+version: '3'
+services:
+  db:
+    build:
+      context: ./db
+    environment:
+      - MYSQL_DATABASE=CharacterCreator
+      - MYSQL_USER=dev
+      - MYSQL_PASSWORD=dev
+      - MYSQL_ROOT_PASSWORD=root_psw
+    ports:
+      - '8989:3306'
+    volumes:
+      - './db/data/:/var/lib/mysql'
+    networks:
+      - symfony_dev
+
+  php:
+    build:
+      context: ./php
+    volumes:
+      - './php/.ssh:/tmp/.ssh'
+      - '../:/var/www'
+      - 'var:/var/www/var/'
+      - 'vendor:/var/www/vendor/'
+      - 'bundles:/var/www/web/bundles/'
+      - 'js:/var/www/web/js/'
+    networks:
+      - symfony_dev
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - './nginx/nginx.conf:/etc/nginx/nginx.conf'
+      - './nginx/sites/:/etc/nginx/sites-available'
+      - './nginx/conf.d/:/etc/nginx/conf.d'
+      - '../:/var/www'
+      - 'var:/var/www/var/'
+      - 'vendor:/var/www/vendor/'
+      - 'bundles:/var/www/web/bundles/'
+      - 'js:/var/www/web/js/'
+    ports:
+      - '80:80'
+    networks:
+      - symfony_dev
+    depends_on:
+      - php
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8081:80'
+    networks:
+      - symfony_dev
+    depends_on:
+      - db
+    environment:
+      - PMA_HOST=db
+
+networks:
+  symfony_dev:
+    ipam:
+      driver: bridge
+      config:
+        - subnet: "172.1.1.0/24"
+
+volumes:
+  bundles:
+  js:
+  vendor:
+  var:

@@ -1,0 +1,210 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UserProfile
+ *
+ * @ORM\Table(name="user_profile")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserProfileRepository")
+ */
+class UserProfile
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $surname;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $img;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $credits = 20;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $credits_purchased_at;
+
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string|null $name
+     *
+     * @return UserProfile
+     */
+    public function setName($name = null)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set surname.
+     *
+     * @param string|null $surname
+     *
+     * @return UserProfile
+     */
+    public function setSurname($surname = null)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * Get surname.
+     *
+     * @return string|null
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * Set img.
+     *
+     * @param string|null $img
+     *
+     * @return UserProfile
+     */
+    public function setImg($img = null)
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * Get img.
+     *
+     * @return string|null
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * Set credits.
+     *
+     * @param int $credits
+     *
+     * @return UserProfile
+     */
+    public function setCredits(int $credits)
+    {
+        $this->credits = $credits;
+
+        return $this;
+    }
+
+    /**
+     * Get credits.
+     *
+     * @return int
+     */
+    public function getCredits()
+    {
+        return $this->credits;
+    }
+
+    /**
+     * Set creditsPurchasedAt.
+     *
+     * @param DateTime|null $creditsPurchasedAt
+     *
+     * @return UserProfile
+     */
+    public function setCreditsPurchasedAt($creditsPurchasedAt = null)
+    {
+        $this->credits_purchased_at = $creditsPurchasedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get creditsPurchasedAt.
+     *
+     * @return DateTime|null
+     */
+    public function getCreditsPurchasedAt()
+    {
+        return $this->credits_purchased_at;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param Users|null $user
+     *
+     * @return UserProfile
+     */
+    public function setUser(Users $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return Users|null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}
