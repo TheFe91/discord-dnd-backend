@@ -63,6 +63,13 @@ class MainController extends Controller
     public function characterSubmitted(Request $request): Response
     {
         $parameters = $request->request->all();
+        $accessCode = $parameters['access_code'];
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (count($em->getRepository('AppBundle:AccessCodes')->findOneBy(array('code' => $accessCode))) === 0) {
+            return Responder::generateError('Your code is invalid"');
+        }
 
         return new JsonResponse($parameters, 200);
     }

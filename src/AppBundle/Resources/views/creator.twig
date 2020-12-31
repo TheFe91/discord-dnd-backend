@@ -11,6 +11,89 @@
     <title>D&D Bot Suite - Character Creator</title>
 
     <link href="{{ asset('bundles/app/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .modal-confirm {
+            color: #434e65;
+            width: 525px;
+        }
+        .modal-confirm .modal-content {
+            padding: 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        .modal-confirm .modal-header {
+            border-bottom: none;
+            position: relative;
+            text-align: center;
+            margin: -20px -20px 0;
+            border-radius: 5px 5px 0 0;
+            padding: 35px;
+        }
+        .modal-header-error {
+            background: #e85e6c;
+        }
+        .modal-header-success {
+            background: #67e85e;
+        }
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 36px;
+            margin: 10px 0;
+        }
+        .modal-confirm .form-control, .modal-confirm .btn {
+            min-height: 40px;
+            border-radius: 3px;
+        }
+        .modal-confirm .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #fff;
+            text-shadow: none;
+            opacity: 0.5;
+        }
+        .modal-confirm .close:hover {
+            opacity: 0.8;
+        }
+        .modal-confirm .icon-box {
+            color: #fff;
+            width: 95px;
+            height: 95px;
+            display: inline-block;
+            border-radius: 50%;
+            z-index: 9;
+            border: 5px solid #fff;
+            padding: 15px;
+            text-align: center;
+        }
+        .modal-confirm .icon-box i {
+            font-size: 58px;
+            margin: -2px 0 0 -2px;
+        }
+        .modal-confirm.modal-dialog {
+            margin-top: 80px;
+        }
+        .modal-confirm .btn, .modal-confirm .btn:active {
+            color: #fff;
+            border-radius: 4px;
+            background: #eeb711 !important;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            border-radius: 30px;
+            margin-top: 10px;
+            padding: 6px 20px;
+            min-width: 150px;
+            border: none;
+        }
+        .modal-confirm .btn:hover, .modal-confirm .btn:focus {
+            background: #eda645 !important;
+            outline: none;
+        }
+    </style>
 
 </head>
 
@@ -25,8 +108,8 @@
                         <h1>Character Creator</h1>
                     </div>
                     <div class="col-3">
-                        <label for="password">Password given by D&D 3.5 Character Generator Discord Bot</label>
-                        <input class="form-control" type="password" name="password" id="password" placeholder="Enter password...">
+                        <label for="access_code">Password given by D&D 3.5 Character Generator Discord Bot</label>
+                        <input class="form-control" type="password" name="access_code" id="access_code" placeholder="Enter your access code">
                     </div>
                     <div class="col-2">
                         <button type="button" class="btn btn-success" id="submit">SAVE</button>
@@ -45,6 +128,9 @@
             </div>
         </form>
     </div>
+
+    {% include '@App/modal/errorModal.twig' %}
+    {% include '@App/modal/successModal.twig' %}
 
 <script src="{{ asset('bundles/app/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/app/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -132,10 +218,23 @@
     will_vals.on('input', calcWill);
 
     submit.on('click', () => {
+        if ($('#access_code').val() === '') {
+            $('#errorMessage').text('The access code is empty!');
+            $('#errorModal').modal('show');
+            return;
+        }
         $.post(
             '{{ url('characterSubmitted_url') }}',
             page_form.serialize(),
-            () => alert('Success')
+            (data) => {
+                if (data.code === 'KO') {
+                    $('#errorMessage').text(data.message);
+                    $('#errorModal').modal('show');
+                }
+                else {
+                    $('#successModal').modal('show');
+                }
+            }
         );
     });
 </script>
