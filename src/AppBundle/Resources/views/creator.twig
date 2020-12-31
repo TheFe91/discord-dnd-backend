@@ -107,8 +107,8 @@
                     <div class="col-3">
                         <h1>Character Creator</h1>
                     </div>
-                    <div class="col-3">
-                        <label for="access_code">Password given by D&D 3.5 Character Generator Discord Bot</label>
+                    <div class="col-4">
+                        <label for="access_code">Access code given by D&D 3.5 Character Generator Discord Bot</label>
                         <input class="form-control" type="password" name="access_code" id="access_code" placeholder="Enter your access code">
                     </div>
                     <div class="col-2">
@@ -227,8 +227,8 @@
             '{{ url('characterSubmitted_url') }}',
             page_form.serialize(),
             (data) => {
-                if (data.code === 'KO') {
-                    $('#errorMessage').text(data.message);
+                if (data.result === 'KO') {
+                    $('#errorMessage').text(data.error);
                     $('#errorModal').modal('show');
                 }
                 else {

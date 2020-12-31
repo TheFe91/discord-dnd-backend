@@ -28,8 +28,8 @@
         </select>
     </div>
     <div class="col-2">
-        <label for="race">Alignment</label>
-        <select name="race" id="race" class="form-control">
+        <label for="alignment">Alignment</label>
+        <select name="alignment" id="alignment" class="form-control">
             <option>-</option>
             {% for alignment in alignments %}
                 <option value="{{ alignment.getName }}">{{ alignment.getName }}</option>
@@ -37,8 +37,8 @@
         </select>
     </div>
     <div class="col-2">
-        <label for="class">Deity</label>
-        <select name="class" id="class" class="form-control">
+        <label for="deity">Deity</label>
+        <select name="deity" id="deity" class="form-control">
             <option>-</option>
             {% for deity in deities %}
                 <option value="{{ deity.getName }}">{{ deity.getName }}</option>
