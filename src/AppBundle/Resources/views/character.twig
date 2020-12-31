@@ -1,0 +1,86 @@
+<h3 class="mt-2">Character</h3>
+
+<div class="row">
+    <div class="col-2">
+        <label for="character-name">Character name</label>
+        <input type="text" class="form-control" name="character-name" id="character_name" placeholder="Type here...">
+    </div>
+    <div class="col-2">
+        <label for="player">Player</label>
+        <input type="text" class="form-control" name="player" id="player" placeholder="Type here...">
+    </div>
+    <div class="col-2">
+        <label for="race">Race</label>
+        <select name="race" id="race" class="form-control">
+            <option>-</option>
+            {% for race in races %}
+                <option value="{{ race.getName }}">{{ race.getName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-2">
+        <label for="class">Class</label>
+        <select name="class" id="class" class="form-control">
+            <option>-</option>
+            {% for class in classes %}
+                <option value="{{ class.getName }}">{{ class.getName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-2">
+        <label for="race">Alignment</label>
+        <select name="race" id="race" class="form-control">
+            <option>-</option>
+            {% for alignment in alignments %}
+                <option value="{{ alignment.getName }}">{{ alignment.getName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-2">
+        <label for="class">Deity</label>
+        <select name="class" id="class" class="form-control">
+            <option>-</option>
+            {% for deity in deities %}
+                <option value="{{ deity.getName }}">{{ deity.getName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-1 offset-2">
+        <label for="size">Size</label>
+        <input type="text" class="form-control" name="size" id="size" placeholder="Type here...">
+    </div>
+    <div class="col-1">
+        <label for="age">Age</label>
+        <input type="number" class="form-control" name="age" id="age" placeholder="Type here...">
+    </div>
+    <div class="col-1">
+        <label for="gender">Gender</label>
+        <select name="gender" class="form-control" id="gender">
+            <option>-</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select>
+    </div>
+    <div class="col-1">
+        <label for="height">Height</label>
+        <input type="number" class="form-control" name="height" id="height" placeholder="Type here...">
+    </div>
+    <div class="col-1">
+        <label for="weight">Weight</label>
+        <input type="number" class="form-control" name="weight" id="weight" placeholder="Type here...">
+    </div>
+    <div class="col-1">
+        <label for="eyes">Eyes</label>
+        <input type="text" class="form-control" name="eyes" id="eyes" placeholder="Type here...">
+    </div>
+    <div class="col-1">
+        <label for="hair">Hair</label>
+        <input type="text" class="form-control" name="hair" id="hair" placeholder="Type here...">
+    </div>
+    <div class="col-1">
+        <label for="skin">Skin</label>
+        <input type="text" class="form-control" name="skin" id="skin" placeholder="Type here...">
+    </div>
+</div>

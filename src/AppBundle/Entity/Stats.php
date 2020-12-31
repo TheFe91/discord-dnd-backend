@@ -74,42 +74,42 @@ class Stats
      *
      * @ORM\Column(type="integer")
      */
-    private $strength_temp_modifier;
+    private $strength_temp;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $dexterity_temp_modifier;
+    private $dexterity_temp;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $constitution_temp_modifier;
+    private $constitution_temp;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $intelligence_temp_modifier;
+    private $intelligence_temp;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $wisdom_temp_modifier;
+    private $wisdom_temp;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $charisma_temp_modifier;
+    private $charisma_temp;
 
     /**
      * @var int

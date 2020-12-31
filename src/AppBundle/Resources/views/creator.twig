@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>D&D Bot Suite - Character Creator</title>
+
+    <link href="{{ asset('bundles/app/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="page-content">
+
+        <form id="page_form">
+            <div class="container-fluid">
+                <h1 class="mt-4">Character Creator</h1>
+                <button type="button" class="btn btn-success" id="submit">SAVE</button>
+
+                <hr/>
+
+                {% include '@App/character.twig' %}
+
+                <hr/>
+
+                <h3 class="mt-2">Stats</h3>
+
+                {% include '@App/stats/stats.twig' %}
+            </div>
+        </form>
+    </div>
+
+<script src="{{ asset('bundles/app/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/app/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<script>
+
+    const page_form = $('#page_form');
+    const submit = $('#submit');
+    const initiative_misc = $('#initiative_misc');
+
+    const calcInitiative = () => {
+        $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
+    }
+
+    $('.scores').on('input', function() {
+        const targetId = $(this).attr('id').replaceAll('-score', '-modifier');
+        const modifierValue = Math.floor((Number($(this).val()) - 10) / 2);
+        $(`#${targetId}`).text(modifierValue);
+    });
+
+    $('#dex-score').on('input', function() {
+        const val = Math.floor((Number($(this).val()) - 10) / 2);
+        $('#ac_dex').text(val);
+        $('#initiative_dex').text(val);
+        calcInitiative();
+    });
+
+    $('.acs').on('input', function() {
+        let ac = 0;
+        $('.acs').each((_, el) => ac += Number($(el).val()));
+        $('#ac').val(ac);
+    });
+
+    initiative_misc.on('input', calcInitiative);
+
+    submit.on('click', () => {
+        $.post(
+            '{{ url('characterSubmitted_url') }}',
+            page_form.serialize(),
+            () => alert('Success')
+        );
+    });
+</script>
+
+</body>
+
+</html>
