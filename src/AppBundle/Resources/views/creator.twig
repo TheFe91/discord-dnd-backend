@@ -44,10 +44,44 @@
     const page_form = $('#page_form');
     const submit = $('#submit');
     const initiative_misc = $('#initiative_misc');
+    const con_score = $('#con-score');
+    const dex_score = $('#dex-score');
+    const wis_score = $('#wis-score');
+    const ac_vals = $('.ac-vals');
+    const fortitude_vals = $('.fortitude-vals');
+    const reflex_vals = $('.reflex-vals');
+    const will_vals = $('.will-vals');
+    const fortitude_ability_modifier = $('#fortitude_ability_modifier');
+    const reflex_ability_modifier = $('#reflex_ability_modifier');
+    const will_ability_modifier = $('#will_ability_modifier');
 
     const calcInitiative = () => {
         $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
     }
+
+    const calcFortitude = () => {
+        let total = Number(fortitude_ability_modifier.text());
+        $.each(fortitude_vals, (_, el) => total += Number($(el).val()));
+        $('#fortitude').text(total);
+    };
+
+    const calcReflex = () => {
+        let total = Number(reflex_ability_modifier.text());
+        $.each(reflex_vals, (_, el) => total += Number($(el).val()));
+        $('#reflex').text(total);
+    };
+
+    const calcWill = () => {
+        let total = Number(will_ability_modifier.text());
+        $.each(will_vals, (_, el) => total += Number($(el).val()));
+        $('#will').text(total);
+    };
+
+    const calcAC = () => {
+        let total = 10 + Number(reflex_ability_modifier.text());
+        $.each(ac_vals, (_, el) => total += Number($(el).val()));
+        $('#ac').text(total);
+    };
 
     $('.scores').on('input', function() {
         const targetId = $(this).attr('id').replaceAll('-score', '-modifier');
@@ -55,20 +89,37 @@
         $(`#${targetId}`).text(modifierValue);
     });
 
-    $('#dex-score').on('input', function() {
+    con_score.on('input', function () {
+        const val = Math.floor((Number($(this).val()) - 10) / 2);
+        fortitude_ability_modifier.text(val);
+        calcFortitude();
+    });
+
+    wis_score.on('input', function () {
+        const val = Math.floor((Number($(this).val()) - 10) / 2);
+        will_ability_modifier.text(val);
+        calcWill();
+    });
+
+    dex_score.on('input', function() {
         const val = Math.floor((Number($(this).val()) - 10) / 2);
         $('#ac_dex').text(val);
         $('#initiative_dex').text(val);
+        reflex_ability_modifier.text(val);
         calcInitiative();
+        calcReflex();
+        calcAC();
     });
 
-    $('.acs').on('input', function() {
-        let ac = 0;
-        $('.acs').each((_, el) => ac += Number($(el).val()));
-        $('#ac').val(ac);
-    });
+    ac_vals.on('input', calcAC);
 
     initiative_misc.on('input', calcInitiative);
+
+    fortitude_vals.on('input', calcFortitude);
+
+    reflex_vals.on('input', calcReflex);
+
+    will_vals.on('input', calcWill);
 
     submit.on('click', () => {
         $.post(
