@@ -1302,4 +1302,148 @@ class Stats
     {
         return $this->character;
     }
+
+    /**
+     * Set strengthTemp.
+     *
+     * @param int $strengthTemp
+     *
+     * @return Stats
+     */
+    public function setStrengthTemp($strengthTemp)
+    {
+        $this->strength_temp = $strengthTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get strengthTemp.
+     *
+     * @return int
+     */
+    public function getStrengthTemp()
+    {
+        return $this->strength_temp;
+    }
+
+    /**
+     * Set dexterityTemp.
+     *
+     * @param int $dexterityTemp
+     *
+     * @return Stats
+     */
+    public function setDexterityTemp($dexterityTemp)
+    {
+        $this->dexterity_temp = $dexterityTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get dexterityTemp.
+     *
+     * @return int
+     */
+    public function getDexterityTemp()
+    {
+        return $this->dexterity_temp;
+    }
+
+    /**
+     * Set constitutionTemp.
+     *
+     * @param int $constitutionTemp
+     *
+     * @return Stats
+     */
+    public function setConstitutionTemp($constitutionTemp)
+    {
+        $this->constitution_temp = $constitutionTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get constitutionTemp.
+     *
+     * @return int
+     */
+    public function getConstitutionTemp()
+    {
+        return $this->constitution_temp;
+    }
+
+    /**
+     * Set intelligenceTemp.
+     *
+     * @param int $intelligenceTemp
+     *
+     * @return Stats
+     */
+    public function setIntelligenceTemp($intelligenceTemp)
+    {
+        $this->intelligence_temp = $intelligenceTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get intelligenceTemp.
+     *
+     * @return int
+     */
+    public function getIntelligenceTemp()
+    {
+        return $this->intelligence_temp;
+    }
+
+    /**
+     * Set wisdomTemp.
+     *
+     * @param int $wisdomTemp
+     *
+     * @return Stats
+     */
+    public function setWisdomTemp($wisdomTemp)
+    {
+        $this->wisdom_temp = $wisdomTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get wisdomTemp.
+     *
+     * @return int
+     */
+    public function getWisdomTemp()
+    {
+        return $this->wisdom_temp;
+    }
+
+    /**
+     * Set charismaTemp.
+     *
+     * @param int $charismaTemp
+     *
+     * @return Stats
+     */
+    public function setCharismaTemp($charismaTemp)
+    {
+        $this->charisma_temp = $charismaTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get charismaTemp.
+     *
+     * @return int
+     */
+    public function getCharismaTemp()
+    {
+        return $this->charisma_temp;
+    }
 }

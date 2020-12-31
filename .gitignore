@@ -20,6 +20,8 @@
 
 /vendor/
 
+*.php~
+
 /web/bundles/
 
 .idea/
