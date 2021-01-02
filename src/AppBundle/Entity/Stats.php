@@ -32,280 +32,280 @@ class Stats
      *
      * @ORM\Column(type="integer")
      */
-    private $strength;
+    private $strength = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $dexterity;
+    private $dexterity = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $constitution;
+    private $constitution = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $intelligence;
+    private $intelligence = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $wisdom;
+    private $wisdom = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $charisma;
+    private $charisma = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $strength_temp;
+    private $strength_temp = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $dexterity_temp;
+    private $dexterity_temp = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $constitution_temp;
+    private $constitution_temp = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $intelligence_temp;
+    private $intelligence_temp = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $wisdom_temp;
+    private $wisdom_temp = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $charisma_temp;
+    private $charisma_temp = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $experience_points;
+    private $experience_points = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $hit_points;
+    private $hit_points = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $armor_bonus;
+    private $armor_bonus = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $shield_bonus;
+    private $shield_bonus = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $size_modifier;
+    private $size_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $natural_armor;
+    private $natural_armor = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $deflection_modifier;
+    private $deflection_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $ac_misc_modifier;
+    private $ac_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $damage_reduction;
+    private $damage_reduction = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $speed;
+    private $speed = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $initiative_misc_modifier;
+    private $initiative_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $fortitude_base_save;
+    private $fortitude_base_save = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $fortitude_magic_modifier;
+    private $fortitude_magic_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $fortitude_misc_modifier;
+    private $fortitude_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $fortitude_temp_modifier;
+    private $fortitude_temp_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $reflex_base_save;
+    private $reflex_base_save = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $reflex_magic_modifier;
+    private $reflex_magic_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $reflex_misc_modifier;
+    private $reflex_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $reflex_temp_modifier;
+    private $reflex_temp_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $will_base_save;
+    private $will_base_save = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $will_magic_modifier;
+    private $will_magic_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $will_misc_modifier;
+    private $will_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $will_temp_modifier;
+    private $will_temp_modifier = 0;
 
     /**
      * @var array
      *
      * @ORM\Column(type="simple_array")
      */
-    private $base_attack_bonus;
+    private $base_attack_bonus = array(0);
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_resistance;
+    private $spell_resistance = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $grapple_misc_modifier;
+    private $grapple_misc_modifier = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $spell_save;
+    private $spell_save = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $arcane_spell_failure;
+    private $arcane_spell_failure = 0;
 
 
 

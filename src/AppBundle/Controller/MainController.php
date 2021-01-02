@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\AccessCodes;
+use AppBundle\Entity\Stats;
 use AppBundle\Services\Responder;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +21,7 @@ class MainController extends Controller
     public function indexAction(): ?Response
     {
         $em = $this->getDoctrine()->getManager();
+
         return $this->render(
             '@App/creator.twig', [
                 'races' => $em->getRepository('AppBundle:Races')->findAll(),
