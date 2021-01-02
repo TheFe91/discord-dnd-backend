@@ -81,13 +81,13 @@ class Weapons
      *
      * @ORM\Column(type="integer")
      */
-    private $ammunitions;
+    private $ammunition;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $modifier_is_strength = true;
+    private $use_dexterity = false;
 
 
 
@@ -270,6 +270,54 @@ class Weapons
     }
 
     /**
+     * Set ammunition.
+     *
+     * @param int $ammunition
+     *
+     * @return Weapons
+     */
+    public function setAmmunition($ammunition)
+    {
+        $this->ammunition = $ammunition;
+
+        return $this;
+    }
+
+    /**
+     * Get ammunition.
+     *
+     * @return int
+     */
+    public function getAmmunition()
+    {
+        return $this->ammunition;
+    }
+
+    /**
+     * Set useDexterity.
+     *
+     * @param bool $useDexterity
+     *
+     * @return Weapons
+     */
+    public function setUseDexterity($useDexterity)
+    {
+        $this->use_dexterity = $useDexterity;
+
+        return $this;
+    }
+
+    /**
+     * Get useDexterity.
+     *
+     * @return bool
+     */
+    public function getUseDexterity()
+    {
+        return $this->use_dexterity;
+    }
+
+    /**
      * Set character.
      *
      * @param \AppBundle\Entity\Characters|null $character
@@ -291,53 +339,5 @@ class Weapons
     public function getCharacter()
     {
         return $this->character;
-    }
-
-    /**
-     * Set ammunitions.
-     *
-     * @param int $ammunitions
-     *
-     * @return Weapons
-     */
-    public function setAmmunitions($ammunitions)
-    {
-        $this->ammunitions = $ammunitions;
-
-        return $this;
-    }
-
-    /**
-     * Get ammunitions.
-     *
-     * @return int
-     */
-    public function getAmmunitions()
-    {
-        return $this->ammunitions;
-    }
-
-    /**
-     * Set modifierIsStrength.
-     *
-     * @param bool $modifierIsStrength
-     *
-     * @return Weapons
-     */
-    public function setModifierIsStrength($modifierIsStrength)
-    {
-        $this->modifier_is_strength = $modifierIsStrength;
-
-        return $this;
-    }
-
-    /**
-     * Get modifierIsStrength.
-     *
-     * @return bool
-     */
-    public function getModifierIsStrength()
-    {
-        return $this->modifier_is_strength;
     }
 }

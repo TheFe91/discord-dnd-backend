@@ -41,7 +41,7 @@ class SpecialAbilities
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -53,7 +53,7 @@ class SpecialAbilities
      *
      * @return SpecialAbilities
      */
-    public function setName($name)
+    public function setName(string $name): SpecialAbilities
     {
         $this->name = $name;
 
@@ -65,7 +65,7 @@ class SpecialAbilities
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -73,11 +73,11 @@ class SpecialAbilities
     /**
      * Set character.
      *
-     * @param \AppBundle\Entity\Characters|null $character
+     * @param Characters|null $character
      *
      * @return SpecialAbilities
      */
-    public function setCharacter(\AppBundle\Entity\Characters $character = null)
+    public function setCharacter(Characters $character = null): SpecialAbilities
     {
         $this->character = $character;
 
@@ -87,9 +87,9 @@ class SpecialAbilities
     /**
      * Get character.
      *
-     * @return \AppBundle\Entity\Characters|null
+     * @return Characters|null
      */
-    public function getCharacter()
+    public function getCharacter(): ?Characters
     {
         return $this->character;
     }
