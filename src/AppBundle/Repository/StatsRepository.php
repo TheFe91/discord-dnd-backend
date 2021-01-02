@@ -14,20 +14,57 @@ class StatsRepository extends EntityRepository
 {
     public function getModifier(int $id, string $stat): int
     {
-        $orv_getter = 'get' . ucfirst($stat);
-        $tmp_getter = "{$orv_getter}Temp";
-        $original_value = $this->find($id)->{$orv_getter}();
-        $temp_value = $this->find($id)->{$tmp_getter}();
-        return (int) floor((($original_value + $temp_value) - 10) / 2);
+        $orvGetter = 'get' . ucfirst($stat);
+        $tmpGetter = "{$orvGetter}Temp";
+        $originalValue = $this->find($id)->{$orvGetter}();
+        $tempValue = $this->find($id)->{$tmpGetter}();
+        return (int) floor((($originalValue + $tempValue) - 10) / 2);
     }
 
     public function getAC(int $id) : int
     {
         $stat = $this->find($id);
         $armor_bonus = $stat->getArmorBonus();
-        $shield_bonus = $stat->getShieldBonus();
-        $dex_modifier = self::getModifier($id, 'dexterity');
-        $size_modifier = $stat->getSizeModifier();
-        return $armor_bonus + $shield_bonus + $dex_modifier + $size_modifier +
+        $shieldBonus = $stat->getShieldBonus();
+        $dexModifier = self::getModifier($id, 'dexterity');
+        $sizeModifier = $stat->getSizeModifier();
+        $naturalArmor = $stat->getNaturalArmor();
+        $deflectionModifier = $stat->getDeflectionModifier();
+        $acMiscModifier = $stat->getAcMiscModifier();
+        return $armor_bonus + $shieldBonus + $dexModifier + $sizeModifier + $naturalArmor + $deflectionModifier + $acMiscModifier;
+    }
+
+    public function getInitiative(int $id) : int
+    {
+        $stat = $this->find($id);
+        $dexModifier = self::getModifier($id, 'dexterity');
+        $initiativeMiscModifier = $stat->getInitiativeMiscModifier();
+        return $dexModifier + $initiativeMiscModifier;
+    }
+
+    public function getSavingThrow(int $id, string $savingThrow) : int
+    {
+        $stat = $this->find($id);
+        $abilityModifier = self::getModifier($id,
+            $savingThrow === 'fortitude'
+                ? 'constitution'
+                : $savingThrow === 'reflex'
+                    ? 'dexterity'
+                    : 'wisdom'
+        );
+
+        $baseSaveGetter = "get{$savingThrow}BaseSave";
+        $baseSave = $stat->{$baseSaveGetter}();
+
+        $magicSaveGetter = "get{$savingThrow}MagicModifier";
+        $magicModifier = $stat->{$magicSaveGetter}();
+
+        $miscSaveGetter = "get{$savingThrow}MiscModifier";
+        $miscModifier = $stat->{$miscSaveGetter}();
+
+        $tempSaveGetter = "get{$savingThrow}TempModifier";
+        $tempModifier = $stat->{$tempSaveGetter}();
+
+        return $baseSave + $abilityModifier + $magicModifier + $miscModifier + $tempModifier;
     }
 }
