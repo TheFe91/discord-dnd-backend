@@ -32,273 +32,273 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_0;
+    private $known_spells_0 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_0;
+    private $spell_save_dc_0 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_0;
+    private $spells_per_day_0 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_1;
+    private $known_spells_1 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_1;
+    private $spell_save_dc_1 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_1;
+    private $spells_per_day_1 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_1;
+    private $bonus_spells_1 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_2;
+    private $known_spells_2 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_2;
+    private $spell_save_dc_2 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_2;
+    private $spells_per_day_2 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_2;
+    private $bonus_spells_2 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_3;
+    private $known_spells_3 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_3;
+    private $spell_save_dc_3 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_3;
+    private $spells_per_day_3 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_3;
+    private $bonus_spells_3 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_4;
+    private $known_spells_4 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_4;
+    private $spell_save_dc_4 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_4;
+    private $spells_per_day_4 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_4;
+    private $bonus_spells_4 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_5;
+    private $known_spells_5 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_5;
+    private $spell_save_dc_5 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_5;
+    private $spells_per_day_5 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_5;
+    private $bonus_spells_5 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_6;
+    private $known_spells_6 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_6;
+    private $spell_save_dc_6 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_6;
+    private $spells_per_day_6 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_6;
+    private $bonus_spells_6 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_7;
+    private $known_spells_7 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_7;
+    private $spell_save_dc_7 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_7;
+    private $spells_per_day_7 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_7;
+    private $bonus_spells_7 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_8;
+    private $known_spells_8 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_8;
+    private $spell_save_dc_8 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_8;
+    private $spells_per_day_8 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_8;
+    private $bonus_spells_8 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_9;
+    private $known_spells_9 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spell_save_dc_9;
+    private $spell_save_dc_9 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spells_per_day_9;
+    private $spells_per_day_9 = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bonus_spells_9;
+    private $bonus_spells_9 = 0;
 
 
 

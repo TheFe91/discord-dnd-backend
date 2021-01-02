@@ -32,490 +32,490 @@ class Skills
      *
      * @ORM\Column(type="integer")
      */
-    private $appraise_ranks;
+    private $appraise_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $appraise_misc_modifier;
+    private $appraise_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $balance_ranks;
+    private $balance_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $balance_misc_modifier;
+    private $balance_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bluff_ranks;
+    private $bluff_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $bluff_misc_modifier;
+    private $bluff_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $climb_ranks;
+    private $climb_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $climb_misc_modifier;
+    private $climb_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $concentration_ranks;
+    private $concentration_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $concentration_misc_modifier;
+    private $concentration_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $craft_ranks;
+    private $craft_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $craft_misc_modifier;
+    private $craft_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $decipher_script_ranks;
+    private $decipher_script_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $decipher_script_misc_modifier;
+    private $decipher_script_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $diplomacy_ranks;
+    private $diplomacy_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $diplomacy_misc_modifier;
+    private $diplomacy_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $disable_device_ranks;
+    private $disable_device_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $disable_device_misc_modifier;
+    private $disable_device_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $disguise_ranks;
+    private $disguise_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $disguise_misc_modifier;
+    private $disguise_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $escape_artist_ranks;
+    private $escape_artist_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $escape_artist_misc_modifier;
+    private $escape_artist_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $forgery_ranks;
+    private $forgery_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $forgery_misc_modifier;
+    private $forgery_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $gather_information_ranks;
+    private $gather_information_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $gather_information_misc_modifier;
+    private $gather_information_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $handle_animals_ranks;
+    private $handle_animals_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $handle_animals_misc_modifier;
+    private $handle_animals_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $heal_ranks;
+    private $heal_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $heal_misc_modifier;
+    private $heal_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $hide_ranks;
+    private $hide_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $hide_misc_modifier;
+    private $hide_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $intimidate_ranks;
+    private $intimidate_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $intimidate_misc_modifier;
+    private $intimidate_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $jump_ranks;
+    private $jump_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $jump_misc_modifier;
+    private $jump_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $knowledge_ranks;
+    private $knowledge_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $knowledge_misc_modifier;
+    private $knowledge_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $listen_ranks;
+    private $listen_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $listen_misc_modifier;
+    private $listen_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $move_silently_ranks;
+    private $move_silently_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $move_silently_misc_modifier;
+    private $move_silently_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $open_lock_ranks;
+    private $open_lock_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $open_lock_misc_modifier;
+    private $open_lock_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $perform_ranks;
+    private $perform_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $perform_misc_modifier;
+    private $perform_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $profession_ranks;
+    private $profession_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $profession_misc_modifier;
+    private $profession_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $ride_ranks;
+    private $ride_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $ride_misc_modifier;
+    private $ride_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $search_ranks;
+    private $search_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $search_misc_modifier;
+    private $search_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $sense_motive_ranks;
+    private $sense_motive_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $sense_motive_misc_modifier;
+    private $sense_motive_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $sleight_of_hand_ranks;
+    private $sleight_of_hand_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $sleight_of_hand_misc_modifier;
+    private $sleight_of_hand_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spellcraft_ranks;
+    private $spellcraft_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spellcraft_misc_modifier;
+    private $spellcraft_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spot_ranks;
+    private $spot_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $spot_misc_modifier;
+    private $spot_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $survival_ranks;
+    private $survival_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $survival_misc_modifier;
+    private $survival_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $swim_ranks;
+    private $swim_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $swim_misc_modifier;
+    private $swim_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $tumble_ranks;
+    private $tumble_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $tumble_misc_modifier;
+    private $tumble_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $use_magic_device_ranks;
+    private $use_magic_device_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $use_magic_device_misc_modifier;
+    private $use_magic_device_misc_modifier = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $use_ranks;
+    private $use_ranks = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $use_misc_modifier;
+    private $use_misc_modifier = 0;
 
 
 
