@@ -28,3 +28,4 @@
 .DS_Store
 docker/db/data
 .env
+!/docker/.env
