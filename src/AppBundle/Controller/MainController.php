@@ -28,6 +28,7 @@ class MainController extends Controller
                 'classes' => $em->getRepository('AppBundle:Classes')->findAll(),
                 'alignments' => $em->getRepository('AppBundle:Alignments')->findAll(),
                 'deities' => $em->getRepository('AppBundle:Deities')->findAll(),
+                'skills' => $em->getRepository('AppBundle:Skills')->findAll(),
             ]
         );
     }

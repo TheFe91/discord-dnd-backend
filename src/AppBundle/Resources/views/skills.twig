@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-4">
+        <table>
+            <tr>
+                <td></td>
+                <td class="text-center">Name</td>
+                <td class="text-center">Key</td>
+                <td class="text-center">Total</td>
+                <td></td>
+                <td class="text-center">Ability</td>
+                <td></td>
+                <td class="text-center">Ranks</td>
+                <td></td>
+                <td class="text-center">Misc</td>
+            </tr>
+            {% for skill in skills %}
+                <tr>
+                    <td><input type="checkbox" id="{{ skill.getName }}_cb"></td>
+                    <td class="align-middle">Appraise</td>
+                    <td class="align-middle text-center">&nbsp;INT&nbsp;</td>
+                    <td class="align-middle text-center" id="appraise">0</td>
+                    <td class="align-middle text-center">&nbsp;=&nbsp;</td>
+                    <td class="align-middle text-center" id="appraise_modifier">0</td>
+                    <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                    <td class="align-middle"><input type="number" class="form-control" name="appraise_ranks" id="appraise_ranks"></td>
+                    <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                    <td class="align-middle"><input type="number" class="form-control" name="appraise_misc_mod" id="appraise_misc_mod"></td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td><input type="checkbox" id="appraise_cb"></td>
+                <td class="align-middle">Balance</td>
+                <td class="align-middle text-center">&nbsp;DEX&nbsp;</td>
+                <td class="align-middle text-center" id="appraise">0</td>
+                <td class="align-middle text-center">&nbsp;=&nbsp;</td>
+                <td class="align-middle text-center" id="balance_modifier">0</td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="balance_ranks" id="balance_ranks"></td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="balance_misc_mod" id="balance_misc_mod"></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" id="appraise_cb"></td>
+                <td class="align-middle">Bluff</td>
+                <td class="align-middle text-center">&nbsp;CHA&nbsp;</td>
+                <td class="align-middle text-center" id="appraise">0</td>
+                <td class="align-middle text-center">&nbsp;=&nbsp;</td>
+                <td class="align-middle text-center" id="bluff_modifier">0</td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="" id=""></td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="" id=""></td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-4">
+        <table>
+            <tr>
+                <td></td>
+                <td class="text-center">Name</td>
+                <td class="text-center">Key</td>
+                <td class="text-center">Total</td>
+                <td></td>
+                <td class="text-center">Ability</td>
+                <td></td>
+                <td class="text-center">Ranks</td>
+                <td></td>
+                <td class="text-center">Misc</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" id="appraise_cb"></td>
+                <td class="align-middle text-center">Appraise</td>
+                <td class="align-middle text-center">&nbsp;INT&nbsp;</td>
+                <td class="align-middle text-center" id="appraise">0</td>
+                <td class="align-middle text-center">&nbsp;=&nbsp;</td>
+                <td class="align-middle text-center" id="appraise_modifier">0</td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="" id=""></td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="" id=""></td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-4">
+        <table>
+            <tr>
+                <td></td>
+                <td class="text-center">Name</td>
+                <td class="text-center">Key</td>
+                <td class="text-center">Total</td>
+                <td></td>
+                <td class="text-center">Ability</td>
+                <td></td>
+                <td class="text-center">Ranks</td>
+                <td></td>
+                <td class="text-center">Misc</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" id="appraise_cb"></td>
+                <td class="align-middle text-center">Appraise</td>
+                <td class="align-middle text-center">&nbsp;INT&nbsp;</td>
+                <td class="align-middle text-center" id="appraise">0</td>
+                <td class="align-middle text-center">&nbsp;=&nbsp;</td>
+                <td class="align-middle text-center" id="appraise_modifier">0</td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="" id=""></td>
+                <td class="align-middle text-center">&nbsp;+&nbsp;</td>
+                <td class="align-middle"><input type="number" class="form-control" name="" id=""></td>
+            </tr>
+        </table>
+    </div>
+</div>

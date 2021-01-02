@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Skills;
 use AppBundle\Services\ConnectionService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -78,6 +79,43 @@ class FillInitialDataCommand extends ContainerAwareCommand
             (5, 'Half-Elf'),
             (6, 'Half-Orc'),
             (7, 'Halfling');
+
+            INSERT INTO `skills` (`id`, `name`, `key_ability`) VALUES
+            (1, 'Appraise', 'INT'),
+            (2, 'Balance', 'DEX'),
+            (3, 'Bluff', 'CHA'),
+            (4, 'Climb', 'STR'),
+            (5, 'Concentration', 'CON'),
+            (6, 'Craft', 'INT'),
+            (7, 'Decipher Script', 'INT'),
+            (8, 'Diplomacy', 'CHA'),
+            (9, 'Disable Device', 'INT'),
+            (10, 'Disguise', 'CHA'),
+            (11, 'Escape Artist', 'DEX'),
+            (12, 'Forgery', 'INT'),
+            (13, 'Gather Information', 'CHA'),
+            (14, 'Handle Animal', 'CHA'),
+            (15, 'Heal', 'WIS'),
+            (16, 'Hide', 'DEX'),
+            (17, 'Intimidate', 'CHA'),
+            (18, 'Jump', 'STR'),
+            (19, 'Knowledge', 'INT'),
+            (20, 'Listen', 'WIS'),
+            (21, 'Move Silently', 'DEX'),
+            (22, 'Open Lock', 'DEX'),
+            (23, 'Perform', 'CHA'),
+            (24, 'Profession', 'WIS'),
+            (25, 'Ride', 'DEX'),
+            (26, 'Search', 'INT'),
+            (27, 'Sense Motive', 'WIS'),
+            (28, 'Sleight Of Hand', 'DEX'),
+            (29, 'Spellcraft', 'INT'),
+            (30, 'Spot', 'WIS'),
+            (31, 'Survival', 'WIS'),
+            (32, 'Swim', 'STR'),
+            (33, 'Tumble', 'DEX'),
+            (34, 'Use Magic Device', 'CHA'),
+            (35, 'Use Rope', 'DEX');
         ";
 
         ConnectionService::getConnection($this->getContainer())->exec($sql);
