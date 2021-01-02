@@ -67,4 +67,22 @@ class StatsRepository extends EntityRepository
 
         return $baseSave + $abilityModifier + $magicModifier + $miscModifier + $tempModifier;
     }
+
+    public function getGrapple(int $id, bool $useDex = false) : array
+    {
+        $stat = $this->find($id);
+        $babs = $stat->getBaseAttackBonus();
+
+        $return = array();
+
+        foreach ($babs as $bab) {
+            $abilityModifier = self::getModifier($id, $useDex ? 'dexterity' : 'strength');
+            $sizeModifier = $stat->getSizeModifier();
+            $miscModifier = $stat->getGrappleMiscModifier();
+            $grapple = $bab + $abilityModifier + $sizeModifier + $miscModifier;
+            $return[] = $grapple;
+        }
+
+        return $return;
+    }
 }
