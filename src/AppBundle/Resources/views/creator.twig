@@ -128,9 +128,9 @@
 
                 <hr/>
 
-                <h3 class="mt-2">Skills</h3>
+                <h3 class="mt-2">Skills & Weapons</h3>
 
-                {% include '@App/skills.twig' %}
+                {% include '@App/skills_and_weapons/skills_and_weapons.twig' %}
             </div>
         </form>
     </div>
@@ -146,9 +146,12 @@
     const page_form = $('#page_form');
     const submit = $('#submit');
     const initiative_misc = $('#initiative_misc');
-    const con_score = $('#con-score');
+    const str_score = $('#str-score');
     const dex_score = $('#dex-score');
+    const con_score = $('#con-score');
+    const int_score = $('#int-score');
     const wis_score = $('#wis-score');
+    const cha_score = $('#cha-score');
     const ac_vals = $('.ac-vals');
     const fortitude_vals = $('.fortitude-vals');
     const reflex_vals = $('.reflex-vals');
@@ -185,32 +188,63 @@
         $('#ac').text(total);
     };
 
+    const calcSkills = () => {
+        $.each($('.skills'), (_, el) => {
+            const row = $(el);
+            const keyAbility = row.data('ability-field-id');
+            const ranks = row.data('rank-field-id');
+            const misc = row.data('misc-field-id');
+            const skill = row.data('skill');
+
+            $(`#${skill}`).text(Number($(`#${ranks}`).val()) + Number($(`#${misc}`).val()) + Number($(`#${keyAbility}`).text()));
+        });
+    };
+
     $('.scores').on('input', function() {
         const targetId = $(this).attr('id').replaceAll('-score', '-modifier');
         const modifierValue = Math.floor((Number($(this).val()) - 10) / 2);
         $(`#${targetId}`).text(modifierValue);
     });
 
-    con_score.on('input', function () {
+    str_score.on('input', function() {
         const val = Math.floor((Number($(this).val()) - 10) / 2);
-        fortitude_ability_modifier.text(val);
-        calcFortitude();
-    });
-
-    wis_score.on('input', function () {
-        const val = Math.floor((Number($(this).val()) - 10) / 2);
-        will_ability_modifier.text(val);
-        calcWill();
+        $('.str_modifiers').text(val);
     });
 
     dex_score.on('input', function() {
         const val = Math.floor((Number($(this).val()) - 10) / 2);
         $('#ac_dex').text(val);
         $('#initiative_dex').text(val);
+        $('.dex_modifiers').text(val);
         reflex_ability_modifier.text(val);
         calcInitiative();
         calcReflex();
         calcAC();
+    });
+
+    con_score.on('input', function () {
+        const val = Math.floor((Number($(this).val()) - 10) / 2);
+        fortitude_ability_modifier.text(val);
+        $('.con_modifiers').text(val);
+        calcFortitude();
+    });
+
+    int_score.on('input', function() {
+        const val = Math.floor((Number($(this).val()) - 10) / 2);
+        $('.int_modifiers').text(val);
+        calcSkills();
+    });
+
+    wis_score.on('input', function () {
+        const val = Math.floor((Number($(this).val()) - 10) / 2);
+        $('.wis_modifiers').text(val);
+        will_ability_modifier.text(val);
+        calcWill();
+    });
+
+    cha_score.on('input', function() {
+        const val = Math.floor((Number($(this).val()) - 10) / 2);
+        $('.cha_modifiers').text(val);
     });
 
     ac_vals.on('input', calcAC);

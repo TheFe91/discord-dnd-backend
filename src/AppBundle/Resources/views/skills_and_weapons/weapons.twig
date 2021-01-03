@@ -1,0 +1,37 @@
+<div class="col-6">
+    <table class="table-bordered">
+        {% for i in 1..5 %}
+            <tr>
+                <th>Weapon #{{ i }}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th class="text-center">ATTACK</th>
+                            <th class="text-center">ATTACK BONUS</th>
+                            <th class="text-center">DAMAGE</th>
+                            <th class="text-center">CRITICAL</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="attack_{{ i }}" name="attack_{{ i }}" class="form-control"></td>
+                            <td><input type="text" id="attack_bonus_{{ i }}" name="attack_bonus_{{ i }}" class="form-control"></td>
+                            <td><input type="text" id="damage_{{ i }}" name="damage_{{ i }}" class="form-control"></td>
+                            <td><input type="text" id="critical_{{ i }}" name="critical_{{ i }}" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">RANGE</th>
+                            <th class="text-center">TYPE</th>
+                            <th colspan="2" class="text-center">NOTES</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="attack_{{ i }}" name="attack_{{ i }}" class="form-control"></td>
+                            <td><input type="text" id="attack_bonus_{{ i }}" name="attack_bonus_{{ i }}" class="form-control"></td>
+                            <td colspan="2"><input type="text" id="damage_{{ i }}" name="damage_{{ i }}" class="form-control"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
