@@ -103,34 +103,23 @@
 
         <form id="page_form">
             <div class="container-fluid">
-                <div class="row mt-4">
-                    <div class="col-3">
-                        <h1>Character Creator</h1>
-                    </div>
-                    <div class="col-4">
-                        <label for="access_code">Access code given by D&D 3.5 Character Generator Discord Bot</label>
-                        <input class="form-control" type="password" name="access_code" id="access_code" placeholder="Enter your access code">
-                    </div>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-success" id="submit">SAVE</button>
-                    </div>
-                </div>
+                {% include '@App/header.twig' %}
 
                 <hr/>
-
+                <h3 class="mt-2">Character</h3>
                 {% include '@App/character.twig' %}
 
                 <hr/>
-
                 <h3 class="mt-2">Stats</h3>
-
                 {% include '@App/stats/stats.twig' %}
 
                 <hr/>
-
-                <h3 class="mt-2">Skills & Weapons</h3>
-
+                <h3 class="mt-2">Weapons & Skills</h3>
                 {% include '@App/skills_and_weapons/skills_and_weapons.twig' %}
+
+                <hr />
+                <h3 class="mt-2">Gear and Items</h3>
+                {% include '@App/gear_and_items.twig' %}
             </div>
         </form>
     </div>
@@ -143,6 +132,9 @@
 
 <script>
 
+    const add_gear = $('#add-gear');
+    const add_item = $('#add-item');
+    const add_weapon = $('#add-weapon');
     const page_form = $('#page_form');
     const submit = $('#submit');
     const initiative_misc = $('#initiative_misc');
@@ -159,6 +151,10 @@
     const fortitude_ability_modifier = $('#fortitude_ability_modifier');
     const reflex_ability_modifier = $('#reflex_ability_modifier');
     const will_ability_modifier = $('#will_ability_modifier');
+
+    let gear = 0;
+    let items = 0;
+    let weapons = 0;
 
     const calcInitiative = () => {
         $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
@@ -256,6 +252,112 @@
     reflex_vals.on('input', calcReflex);
 
     will_vals.on('input', calcWill);
+
+    add_gear.on('click', () => {
+        gear++;
+        const append = `
+            <tr>
+                <th>#${gear}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th colspan="2" class="text-center">ARMOR / PROTECTIVE ITEM</th>
+                            <th class="text-center">TYPE</th>
+                            <th class="text-center">AC BONUS</th>
+                            <th class="text-center">MAX DEX</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="text" id="armor_${gear}" name="armor[${gear}]" class="form-control"></td>
+                            <td><input type="text" id="type_${gear}" name="type[${gear}]" class="form-control"></td>
+                            <td><input type="text" id="ac_bonus_${gear}" name="ac_bonus[${gear}]" class="form-control"></td>
+                            <td><input type="text" id="max_dex_${gear}" name="max_dex[${gear}]" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">CHECK PENALTY</th>
+                            <th class="text-center">SPELL FAILURE</th>
+                            <th class="text-center">SPEED</th>
+                            <th class="text-center">WEIGHT</th>
+                            <th class="text-center">SPECIAL PROPERTIES</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="check_penalty_${gear}" name="check_penalty[${gear}]" class="form-control"></td>
+                            <td><input type="text" id="spell_failure_${gear}" name="spell_failure[${gear}]" class="form-control"></td>
+                            <td><input type="text" id="speed_${gear}" name="speed[${gear}]" class="form-control"></td>
+                            <td><input type="text" id="weight_${gear}" name="weight[${gear}]" class="form-control"></td>
+                            <td><input type="text" id="special_properties_${gear}" name="special_properties[${gear}]" class="form-control"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        `;
+        $('#gear').append(append);
+    });
+
+    add_item.on('click', () => {
+        items++;
+        const append = `
+            <tr>
+                <th>#${items}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th class="text-center">ITEM</th>
+                            <th class="text-center">QUANTITY</th>
+                            <th class="text-center">WEIGHT</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="item_${items}" name="items[name][${items}}]" class="form-control"></td>
+                            <td><input type="number" id="item_quantity_${items}" name="items[quantity][${items}]" class="form-control"></td>
+                            <td><input type="number" id="item_weight_${items}" name="items[weight][${items}]" class="form-control"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        `;
+        $('#items').append(append);
+    });
+
+    add_weapon.on('click', () => {
+        weapons++;
+        const append = `
+            <tr>
+                <th>Weapon #${weapons}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th class="text-center">ATTACK</th>
+                            <th class="text-center">ATTACK BONUS</th>
+                            <th class="text-center">DAMAGE</th>
+                            <th class="text-center">CRITICAL</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="attack_${weapons}" name="attack_${weapons}" class="form-control"></td>
+                            <td><input type="text" id="attack_bonus_${weapons}" name="attack_bonus_${weapons}" class="form-control"></td>
+                            <td><input type="text" id="damage_${weapons}" name="damage_${weapons}" class="form-control"></td>
+                            <td><input type="text" id="critical_${weapons}" name="critical_${weapons}" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">RANGE</th>
+                            <th class="text-center">TYPE</th>
+                            <th colspan="2" class="text-center">NOTES</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="attack_${weapons}" name="attack_${weapons}" class="form-control"></td>
+                            <td><input type="text" id="attack_bonus_${weapons}" name="attack_bonus_${weapons}" class="form-control"></td>
+                            <td colspan="2"><input type="text" id="damage_${weapons}" name="damage_${weapons}" class="form-control"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        `;
+        $('#weapons').append(append);
+    });
 
     submit.on('click', () => {
         if ($('#access_code').val() === '') {

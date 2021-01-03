@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Gear
+ * gear.twig
  *
  * @ORM\Table(name="gear")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GearRepository")
