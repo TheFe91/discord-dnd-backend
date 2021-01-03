@@ -120,6 +120,14 @@
                 <hr />
                 <h3 class="mt-2">Gear and Items</h3>
                 {% include '@App/gear_and_items.twig' %}
+
+                <hr />
+                <h3 class="mt-2">Feats and Special Abilities</h3>
+                {% include '@App/feats_and_special_abilities.twig' %}
+
+                <hr />
+                <h3 class="mt-2">Spells</h3>
+                {% include '@App/spells.twig' %}
             </div>
         </form>
     </div>
@@ -135,6 +143,8 @@
     const add_gear = $('#add-gear');
     const add_item = $('#add-item');
     const add_weapon = $('#add-weapon');
+    const add_feat = $('#add-feat');
+    const add_special_ability = $('#add-special-ability');
     const page_form = $('#page_form');
     const submit = $('#submit');
     const initiative_misc = $('#initiative_misc');
@@ -155,6 +165,8 @@
     let gear = 0;
     let items = 0;
     let weapons = 0;
+    let feats = 0;
+    let special_abilities = 0;
 
     const calcInitiative = () => {
         $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
@@ -269,10 +281,10 @@
                             <th class="text-center">MAX DEX</th>
                         </tr>
                         <tr>
-                            <td colspan="2"><input type="text" id="armor_${gear}" name="armor[${gear}]" class="form-control"></td>
-                            <td><input type="text" id="type_${gear}" name="type[${gear}]" class="form-control"></td>
-                            <td><input type="text" id="ac_bonus_${gear}" name="ac_bonus[${gear}]" class="form-control"></td>
-                            <td><input type="text" id="max_dex_${gear}" name="max_dex[${gear}]" class="form-control"></td>
+                            <td colspan="2"><input type="text" name="gear[${gear}][name]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][type]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][ac_bonus]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][max_dex]" class="form-control"></td>
                         </tr>
                         <tr>
                             <th class="text-center">CHECK PENALTY</th>
@@ -282,11 +294,11 @@
                             <th class="text-center">SPECIAL PROPERTIES</th>
                         </tr>
                         <tr>
-                            <td><input type="text" id="check_penalty_${gear}" name="check_penalty[${gear}]" class="form-control"></td>
-                            <td><input type="text" id="spell_failure_${gear}" name="spell_failure[${gear}]" class="form-control"></td>
-                            <td><input type="text" id="speed_${gear}" name="speed[${gear}]" class="form-control"></td>
-                            <td><input type="text" id="weight_${gear}" name="weight[${gear}]" class="form-control"></td>
-                            <td><input type="text" id="special_properties_${gear}" name="special_properties[${gear}]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][check_penalty]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][spell_failure]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][speed]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][weight]" class="form-control"></td>
+                            <td><input type="text" name="gear[${gear}][special_properties]" class="form-control"></td>
                         </tr>
                     </table>
                 </td>
@@ -310,9 +322,9 @@
                             <th class="text-center">WEIGHT</th>
                         </tr>
                         <tr>
-                            <td><input type="text" id="item_${items}" name="items[name][${items}}]" class="form-control"></td>
-                            <td><input type="number" id="item_quantity_${items}" name="items[quantity][${items}]" class="form-control"></td>
-                            <td><input type="number" id="item_weight_${items}" name="items[weight][${items}]" class="form-control"></td>
+                            <td><input type="text" id="item_${items}" name="items[${items}][name]" class="form-control"></td>
+                            <td><input type="number" id="item_quantity_${items}" name="items[${items}][quantity]" class="form-control"></td>
+                            <td><input type="number" id="item_weight_${items}" name="items[${items}][weight]" class="form-control"></td>
                         </tr>
                     </table>
                 </td>
@@ -325,7 +337,7 @@
         weapons++;
         const append = `
             <tr>
-                <th>Weapon #${weapons}</th>
+                <th>#${weapons}</th>
             </tr>
             <tr>
                 <td>
@@ -337,10 +349,10 @@
                             <th class="text-center">CRITICAL</th>
                         </tr>
                         <tr>
-                            <td><input type="text" id="attack_${weapons}" name="attack_${weapons}" class="form-control"></td>
-                            <td><input type="text" id="attack_bonus_${weapons}" name="attack_bonus_${weapons}" class="form-control"></td>
-                            <td><input type="text" id="damage_${weapons}" name="damage_${weapons}" class="form-control"></td>
-                            <td><input type="text" id="critical_${weapons}" name="critical_${weapons}" class="form-control"></td>
+                            <td><input type="text" name="weapons[${weapons}][attack]" class="form-control"></td>
+                            <td><input type="text" name="weapons[${weapons}][attack_bonus]" class="form-control"></td>
+                            <td><input type="text" name="weapons[${weapons}][damage]" class="form-control"></td>
+                            <td><input type="text" name="weapons[${weapons}][critical]" class="form-control"></td>
                         </tr>
                         <tr>
                             <th class="text-center">RANGE</th>
@@ -348,15 +360,61 @@
                             <th colspan="2" class="text-center">NOTES</th>
                         </tr>
                         <tr>
-                            <td><input type="text" id="attack_${weapons}" name="attack_${weapons}" class="form-control"></td>
-                            <td><input type="text" id="attack_bonus_${weapons}" name="attack_bonus_${weapons}" class="form-control"></td>
-                            <td colspan="2"><input type="text" id="damage_${weapons}" name="damage_${weapons}" class="form-control"></td>
+                            <td><input type="text" name="weapons[${weapons}][range]" class="form-control"></td>
+                            <td><input type="text" name="weapons[${weapons}][type]" class="form-control"></td>
+                            <td colspan="2"><input type="text" name="weapons[${weapons}][notes]" class="form-control"></td>
                         </tr>
                     </table>
                 </td>
             </tr>
         `;
         $('#weapons').append(append);
+    });
+
+    add_feat.on('click', () => {
+        feats++;
+        const append = `
+            <tr>
+                <th>#${feats}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th class="text-center">NAME</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="feat_${feats}" name="feat[${feats}]" class="form-control"></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        `;
+        $('#feats').append(append);
+    });
+
+    add_special_ability.on('click', () => {
+        special_abilities++;
+        const append = `
+            <tr>
+                <th>#${special_abilities}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th class="text-center">NAME</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="special_abilities_${special_abilities}" name="special_ability[${special_abilities}]" class="form-control"></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        `;
+        $('#special-abilities').append(append);
     });
 
     submit.on('click', () => {

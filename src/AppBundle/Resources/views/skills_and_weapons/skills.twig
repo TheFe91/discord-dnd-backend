@@ -21,9 +21,9 @@
                 <td class="align-middle text-center">&nbsp;=&nbsp;</td>
                 <td class="align-middle text-center {{ skill.getKeyAbility|lower }}_modifiers" id="{{ skill.getName|lower }}_ability">0</td>
                 <td class="align-middle text-center">&nbsp;+&nbsp;</td>
-                <td class="align-middle"><input type="number" class="form-control" name="{{ skill.getName }}_ranks" id="{{ skill.getName }}_ranks" oninput="calcSkills()"></td>
+                <td class="align-middle"><input type="number" class="form-control" name="skills[{{ skill.getName|lower }}][ranks]" id="{{ skill.getName }}_ranks" oninput="calcSkills()"></td>
                 <td class="align-middle text-center">&nbsp;+&nbsp;</td>
-                <td class="align-middle"><input type="number" class="form-control" name="{{ skill.getName }}_misc_mod" id="{{ skill.getName }}_misc_mod" oninput="calcSkills()"></td>
+                <td class="align-middle"><input type="number" class="form-control" name="skills[{{ skill.getName|lower }}][misc_mod]" id="{{ skill.getName }}_misc_mod" oninput="calcSkills()"></td>
             </tr>
         {% endfor %}
     </table>
