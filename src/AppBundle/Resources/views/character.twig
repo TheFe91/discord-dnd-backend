@@ -1,45 +1,41 @@
 <div class="row">
     <div class="col-2">
         <label for="character-name">Character name</label>
-        <input type="text" class="form-control" name="character-name" id="character_name" placeholder="Type here...">
+        <input type="text" class="form-control" name="character[name]" id="character_name" placeholder="Type here...">
     </div>
     <div class="col-2">
         <label for="player">Player</label>
-        <input type="text" class="form-control" name="player" id="player" placeholder="Type here...">
+        <input type="text" class="form-control" name="character[player]" id="player" placeholder="Type here...">
     </div>
     <div class="col-2">
         <label for="race">Race</label>
-        <select name="race" id="race" class="form-control">
-            <option>-</option>
+        <select name="character[race]" id="race" class="form-control">
             {% for race in races %}
-                <option value="{{ race.getName }}">{{ race.getName }}</option>
+                <option value="{{ race.getId }}">{{ race.getName }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="col-2">
         <label for="class">Class</label>
-        <select name="class" id="class" class="form-control">
-            <option>-</option>
+        <select name="character[class]" id="class" class="form-control">
             {% for class in classes %}
-                <option value="{{ class.getName }}">{{ class.getName }}</option>
+                <option value="{{ class.getId }}">{{ class.getName }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="col-2">
         <label for="alignment">Alignment</label>
-        <select name="alignment" id="alignment" class="form-control">
-            <option>-</option>
+        <select name="character[alignment]" id="alignment" class="form-control">
             {% for alignment in alignments %}
-                <option value="{{ alignment.getName }}">{{ alignment.getName }}</option>
+                <option value="{{ alignment.getId }}">{{ alignment.getName }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="col-2">
         <label for="deity">Deity</label>
-        <select name="deity" id="deity" class="form-control">
-            <option>-</option>
+        <select name="character[deity]" id="deity" class="form-control">
             {% for deity in deities %}
-                <option value="{{ deity.getName }}">{{ deity.getName }}</option>
+                <option value="{{ deity.getId }}">{{ deity.getName }}</option>
             {% endfor %}
         </select>
     </div>
@@ -47,38 +43,37 @@
 <div class="row">
     <div class="col-1 offset-2">
         <label for="size">Size</label>
-        <input type="text" class="form-control" name="size" id="size" placeholder="Type here...">
+        <input type="text" class="form-control" name="character[size]" id="size" placeholder="Type here...">
     </div>
     <div class="col-1">
         <label for="age">Age</label>
-        <input type="number" class="form-control" name="age" id="age" placeholder="Type here...">
+        <input type="number" class="form-control" name="character[age]" id="age" placeholder="Type here...">
     </div>
     <div class="col-1">
         <label for="gender">Gender</label>
-        <select name="gender" class="form-control" id="gender">
-            <option>-</option>
+        <select name="character[gender]" class="form-control" id="gender">
             <option value="M">Male</option>
             <option value="F">Female</option>
         </select>
     </div>
     <div class="col-1">
         <label for="height">Height</label>
-        <input type="number" class="form-control" name="height" id="height" placeholder="Type here...">
+        <input type="number" class="form-control" name="character[height]" id="height" placeholder="Type here...">
     </div>
     <div class="col-1">
         <label for="weight">Weight</label>
-        <input type="number" class="form-control" name="weight" id="weight" placeholder="Type here...">
+        <input type="number" class="form-control" name="character[weight]" id="weight" placeholder="Type here...">
     </div>
     <div class="col-1">
         <label for="eyes">Eyes</label>
-        <input type="text" class="form-control" name="eyes" id="eyes" placeholder="Type here...">
+        <input type="text" class="form-control" name="character[eyes]" id="eyes" placeholder="Type here...">
     </div>
     <div class="col-1">
         <label for="hair">Hair</label>
-        <input type="text" class="form-control" name="hair" id="hair" placeholder="Type here...">
+        <input type="text" class="form-control" name="character[hair]" id="hair" placeholder="Type here...">
     </div>
     <div class="col-1">
         <label for="skin">Skin</label>
-        <input type="text" class="form-control" name="skin" id="skin" placeholder="Type here...">
+        <input type="text" class="form-control" name="character[skin]" id="skin" placeholder="Type here...">
     </div>
 </div>

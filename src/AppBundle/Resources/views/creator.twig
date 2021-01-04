@@ -127,6 +127,10 @@
                 <hr />
                 <h3 class="mt-2">Spells</h3>
                 {% include '@App/spells.twig' %}
+
+                <hr />
+                <h3 class="mt-2">Other</h3>
+                {% include '@App/other.twig' %}
             </div>
         </form>
     </div>
@@ -144,6 +148,8 @@
     const add_weapon = $('#add-weapon');
     const add_feat = $('#add-feat');
     const add_special_ability = $('#add-special-ability');
+    const add_spell = $('#add-spell');
+    const add_language = $('#add-language');
     const page_form = $('#page_form');
     const submit = $('#submit');
     const initiative_misc = $('#initiative_misc');
@@ -166,6 +172,8 @@
     let weapons = 0;
     let feats = 0;
     let special_abilities = 0;
+    let spells = 0;
+    let languages = 0;
 
     const calcInitiative = () => {
         $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
@@ -416,6 +424,67 @@
         $('#special-abilities').append(append);
     });
 
+    add_spell.on('click', () => {
+        spells++;
+        const append = `
+            <tr>
+                <th>#${spells}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th class="text-center">NAME</th>
+                            <th class="text-center">LEVEL</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="spells_${spells}" name="spells[${spells}][name]" class="form-control"></td>
+                            <td>
+                                <select id="spells_${spells}" name="spells[${spells}][level]" class="form-control">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        `;
+        $('#spells').append(append);
+    });
+
+    add_language.on('click', () => {
+        languages++;
+        const append = `
+            <tr>
+                <th>#${languages}</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th class="text-center">NAME</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="languages_${languages}" name="languages[${languages}]" class="form-control"></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        `;
+        $('#languages').append(append);
+    });
+
     submit.on('click', () => {
         if ($('#access_code').val() === '') {
             $('#errorMessage').text('The access code is empty!');
@@ -432,6 +501,13 @@
                 }
                 else {
                     $('#successModal').modal('show');
+                    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data.data));
+                    const downloadAnchorNode = document.createElement('a');
+                    downloadAnchorNode.setAttribute("href", dataStr);
+                    downloadAnchorNode.setAttribute("download", "character.json");
+                    document.body.appendChild(downloadAnchorNode);
+                    downloadAnchorNode.click();
+                    downloadAnchorNode.remove();
                 }
             }
         );

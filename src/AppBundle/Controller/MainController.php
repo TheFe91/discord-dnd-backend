@@ -3,9 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\AccessCodes;
+use AppBundle\Entity\Characters;
 use AppBundle\Entity\Stats;
 use AppBundle\Services\Responder;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,15 +67,22 @@ class MainController extends Controller
     public function characterSubmitted(Request $request): Response
     {
         $parameters = $request->request->all();
-        $accessCode = $parameters['access_code'];
+//        $accessCode = $parameters['access_code'];
+//
+//        $em = $this->getDoctrine()->getManager();
+//
+//        if (count($em->getRepository('AppBundle:AccessCodes')->findOneBy(array('code' => $accessCode))) === 0) {
+//            return Responder::generateError('Your code is invalid');
+//        }
 
-        $em = $this->getDoctrine()->getManager();
+        $result = self::saveCharacter($parameters);
 
-        if (count($em->getRepository('AppBundle:AccessCodes')->findOneBy(array('code' => $accessCode))) === 0) {
-            return Responder::generateError('Your code is invalid');
+        if (is_numeric($result)) {
+            return Responder::generateResponse(array('data' => self::generateCharacterJson($result)));
         }
-
-        return new JsonResponse($parameters, 200);
+        else {
+            return Responder::generateError($result, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private function randomPassword(): string
@@ -88,5 +95,143 @@ class MainController extends Controller
             $pass[] = $alphabet[$n];
         }
         return implode($pass);
+    }
+
+    private function saveCharacter($parameters): string
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $characterProps = $parameters['character'];
+
+            $character = new Characters();
+            $character->setName($characterProps['name']);
+            $character->setPlayer($characterProps['player']);
+            $character->setRace($em->getRepository('AppBundle:Races')->find($characterProps['race']));
+            $character->setClass($em->getRepository('AppBundle:Classes')->find($characterProps['class']));
+            $character->setAlignment($em->getRepository('AppBundle:Alignments')->find($characterProps['alignment']));
+            $character->setDeity($em->getRepository('AppBundle:Deities')->find($characterProps['deity']));
+            $character->setSize($characterProps['size']);
+            $character->setAge($characterProps['age']);
+            $character->setGender($characterProps['gender']);
+            $character->setHeight($characterProps['height']);
+            $character->setWeight($characterProps['weight']);
+            $character->setEyes($characterProps['eyes']);
+            $character->setHair($characterProps['hair']);
+            $character->setSkin($characterProps['skin']);
+            $em->persist($character);
+            $em->flush();
+
+            $statsProps = $parameters['stats'];
+
+            $stats = new Stats();
+            $stats->setCharacter($character);
+
+            /* ABILITIES */
+            $stats->setStrength($statsProps['abilities']['strength']);
+            $stats->setDexterity($statsProps['abilities']['dexterity']);
+            $stats->setConstitution($statsProps['abilities']['constitution']);
+            $stats->setIntelligence($statsProps['abilities']['intelligence']);
+            $stats->setWisdom($statsProps['abilities']['wisdom']);
+            $stats->setCharisma($statsProps['abilities']['charisma']);
+
+            /* GENERAL */
+            $stats->setHitPoints($statsProps['general']['hit_points']);
+            $stats->setDamageReduction($statsProps['general']['damage_reduction']);
+            $stats->setSpeed($statsProps['general']['speed']);
+            $stats->setSpellResistance($statsProps['general']['spell_resistance']);
+            $stats->setBaseAttackBonus(self::calculateBAB($statsProps['general']['base_attack_bonus']));
+
+            /* AC */
+            $stats->setArmorBonus($statsProps['ac']['armor_bonus']);
+            $stats->setShieldBonus($statsProps['ac']['shield_bonus']);
+            $stats->setSizeModifier($statsProps['ac']['size_modifier']);
+            $stats->setNaturalArmor($statsProps['ac']['natural_armor']);
+            $stats->setDeflectionModifier($statsProps['ac']['deflection_modifier']);
+            $stats->setAcMiscModifier($statsProps['ac']['misc_modifier']);
+            $stats->setInitiativeMiscModifier($statsProps['initiative']['misc_modifier']);
+
+            /* SAVING THROWS */
+            $stats->setFortitudeBaseSave($statsProps['saving_throws']['fortitude']['base_save']);
+            $stats->setFortitudeMagicModifier($statsProps['saving_throws']['fortitude']['magic_modifier']);
+            $stats->setFortitudeMiscModifier($statsProps['saving_throws']['fortitude']['misc_modifier']);
+            $stats->setReflexBaseSave($statsProps['saving_throws']['reflex']['base_save']);
+            $stats->setReflexMagicModifier($statsProps['saving_throws']['reflex']['magic_modifier']);
+            $stats->setReflexMiscModifier($statsProps['saving_throws']['reflex']['misc_modifier']);
+            $stats->setWillBaseSave($statsProps['saving_throws']['will']['base_save']);
+            $stats->setWillMagicModifier($statsProps['saving_throws']['will']['magic_modifier']);
+            $stats->setWillMiscModifier($statsProps['saving_throws']['will']['misc_modifier']);
+
+            $em->persist($stats);
+            $em->flush();
+
+            return $character->getId();
+        }
+        catch (\Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
+    private function calculateBAB(string $bab) : array
+    {
+        return array(1);
+    }
+
+    private function generateCharacterJson(int $characterId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $character = $em->getRepository('AppBundle:Characters')->find($characterId);
+        $stats = $em->getRepository('AppBundle:Stats')->findOneByCharacter($character);
+
+        $return = array(
+            'character' => array(
+                'name' => $character->getName(),
+                'player' => $character->getPlayer(),
+                'race' => $character->getRace()->getId(),
+                'class' => $character->getClass()->getId(),
+                'alignment' => $character->getAlignment()->getId(),
+                'deity' => $character->getDeity()->getId(),
+                'size' => $character->getSize(),
+                'age' => $character->getAge(),
+                'gender' => $character->getGender(),
+                'height' => $character->getHeight(),
+                'weight' => $character->getWeight(),
+                'eyes' => $character->getEyes(),
+                'hair' => $character->getHair(),
+                'skin' => $character->getSkin(),
+            ),
+            'stats' => array(
+                'strength' => $stats->getStrength(),
+                'dexterity' => $stats->getDexterity(),
+                'constitution' => $stats->getConstitution(),
+                'intelligence' => $stats->getIntelligence(),
+                'wisdom' => $stats->getWisdom(),
+                'charisma' => $stats->getCharisma(),
+                'hit_points' => $stats->getHitPoints(),
+                'damage_reduction' => $stats->getDamageReduction(),
+                'speed' => $stats->getSpeed(),
+                'spell_resistance' => $stats->getSpellResistance(),
+                'base_attack_bonus' => $stats->getBaseAttackBonus(),
+                'armor_bonus' => $stats->getArmorBonus(),
+                'shield_bonus' => $stats->getShieldBonus(),
+                'size_modifier' => $stats->getSizeModifier(),
+                'natural_armor' => $stats->getNaturalArmor(),
+                'deflection_modifier' => $stats->getDeflectionModifier(),
+                'ac_misc_modifier' => $stats->getAcMiscModifier(),
+                'initiative_misc_modifier' => $stats->getInitiativeMiscModifier(),
+                'fortitude_base_save' => $stats->getFortitudeBaseSave(),
+                'fortitude_magic_modifier' => $stats->getFortitudeMagicModifier(),
+                'fortitude_misc_modifier' => $stats->getFortitudeMiscModifier(),
+                'reflex_base_save' => $stats->getReflexBaseSave(),
+                'reflex_magic_modifier' => $stats->getReflexMagicModifier(),
+                'reflex_misc_modifier' => $stats->getReflexMiscModifier(),
+                'will_base_save' => $stats->getWillBaseSave(),
+                'will_magic_modifier' => $stats->getWillMagicModifier(),
+                'will_misc_modifier' => $stats->getWillMiscModifier(),
+            ),
+        );
+
+        return $return;
     }
 }

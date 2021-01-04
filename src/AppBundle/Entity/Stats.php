@@ -1166,7 +1166,7 @@ class Stats
      *
      * @return Stats
      */
-    public function setBaseAttackBonus($baseAttackBonus)
+    public function setBaseAttackBonus($baseAttackBonus): Stats
     {
         $this->base_attack_bonus = $baseAttackBonus;
 
@@ -1178,7 +1178,7 @@ class Stats
      *
      * @return array
      */
-    public function getBaseAttackBonus()
+    public function getBaseAttackBonus(): array
     {
         return $this->base_attack_bonus;
     }
