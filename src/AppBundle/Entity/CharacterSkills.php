@@ -53,7 +53,7 @@ class CharacterSkills
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -65,7 +65,7 @@ class CharacterSkills
      *
      * @return CharacterSkills
      */
-    public function setRanks($ranks)
+    public function setRanks($ranks): CharacterSkills
     {
         $this->ranks = $ranks;
 
@@ -77,7 +77,7 @@ class CharacterSkills
      *
      * @return int
      */
-    public function getRanks()
+    public function getRanks(): int
     {
         return $this->ranks;
     }
@@ -89,7 +89,7 @@ class CharacterSkills
      *
      * @return CharacterSkills
      */
-    public function setMiscModifier($miscModifier)
+    public function setMiscModifier($miscModifier): CharacterSkills
     {
         $this->misc_modifier = $miscModifier;
 
@@ -101,7 +101,7 @@ class CharacterSkills
      *
      * @return int
      */
-    public function getMiscModifier()
+    public function getMiscModifier(): int
     {
         return $this->misc_modifier;
     }
@@ -109,11 +109,11 @@ class CharacterSkills
     /**
      * Set character.
      *
-     * @param \AppBundle\Entity\Characters|null $character
+     * @param Characters|null $character
      *
      * @return CharacterSkills
      */
-    public function setCharacter(\AppBundle\Entity\Characters $character = null)
+    public function setCharacter(Characters $character = null): CharacterSkills
     {
         $this->character = $character;
 
@@ -123,9 +123,9 @@ class CharacterSkills
     /**
      * Get character.
      *
-     * @return \AppBundle\Entity\Characters|null
+     * @return Characters|null
      */
-    public function getCharacter()
+    public function getCharacter(): ?Characters
     {
         return $this->character;
     }
@@ -133,11 +133,11 @@ class CharacterSkills
     /**
      * Set skill.
      *
-     * @param \AppBundle\Entity\Skills|null $skill
+     * @param Skills|null $skill
      *
      * @return CharacterSkills
      */
-    public function setSkill(\AppBundle\Entity\Skills $skill = null)
+    public function setSkill(Skills $skill = null): CharacterSkills
     {
         $this->skill = $skill;
 
@@ -147,9 +147,9 @@ class CharacterSkills
     /**
      * Get skill.
      *
-     * @return \AppBundle\Entity\Skills|null
+     * @return Skills|null
      */
-    public function getSkill()
+    public function getSkill(): ?Skills
     {
         return $this->skill;
     }

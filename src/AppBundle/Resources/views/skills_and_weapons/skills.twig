@@ -1,7 +1,6 @@
 <div class="col-6">
     <table>
         <tr>
-            <td></td>
             <th class="text-center">Name</th>
             <th class="text-center">Key</th>
             <th class="text-center">Total</th>
@@ -14,16 +13,15 @@
         </tr>
         {% for skill in skills %}
             <tr class="skills" data-ability-field-id="{{ skill.getName|lower }}_ability" data-rank-field-id="{{ skill.getName }}_ranks" data-misc-field-id="{{ skill.getName }}_misc_mod" data-skill="{{ skill.getName|lower }}">
-                <td><input type="checkbox" id="{{ skill.getName }}_cb" name="class_skills[{{ skill.getId }}]"></td>
                 <td class="align-middle">{{ skill.getName }}</td>
                 <td class="align-middle text-center">&nbsp;{{ skill.getKeyAbility }}&nbsp;</td>
                 <td class="align-middle text-center" id="{{ skill.getName|lower }}">0</td>
                 <td class="align-middle text-center">&nbsp;=&nbsp;</td>
                 <td class="align-middle text-center {{ skill.getKeyAbility|lower }}_modifiers" id="{{ skill.getName|lower }}_ability">0</td>
                 <td class="align-middle text-center">&nbsp;+&nbsp;</td>
-                <td class="align-middle"><input type="number" class="form-control" name="skills[{{ skill.getName|lower }}][ranks]" id="{{ skill.getName }}_ranks" oninput="calcSkills()"></td>
+                <td class="align-middle"><input type="number" class="form-control" name="skills[{{ skill.getName|lower }}][ranks]" id="{{ skill.getName }}_ranks" oninput="calcSkills()" value="0"></td>
                 <td class="align-middle text-center">&nbsp;+&nbsp;</td>
-                <td class="align-middle"><input type="number" class="form-control" name="skills[{{ skill.getName|lower }}][misc_mod]" id="{{ skill.getName }}_misc_mod" oninput="calcSkills()"></td>
+                <td class="align-middle"><input type="number" class="form-control" name="skills[{{ skill.getName|lower }}][misc_mod]" id="{{ skill.getName }}_misc_mod" oninput="calcSkills()" value="0"></td>
             </tr>
         {% endfor %}
     </table>

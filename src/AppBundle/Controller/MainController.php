@@ -4,8 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\AccessCodes;
 use AppBundle\Entity\Characters;
+use AppBundle\Entity\CharacterSkills;
 use AppBundle\Entity\Stats;
+use AppBundle\Entity\Weapons;
 use AppBundle\Services\Responder;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -119,8 +122,10 @@ class MainController extends Controller
             $character->setEyes($characterProps['eyes']);
             $character->setHair($characterProps['hair']);
             $character->setSkin($characterProps['skin']);
+
             $em->persist($character);
             $em->flush();
+            $em->clear();
 
             $statsProps = $parameters['stats'];
 
@@ -164,10 +169,45 @@ class MainController extends Controller
 
             $em->persist($stats);
             $em->flush();
+            $em->clear();
+
+            $skillsProps = $parameters['skills'];
+
+            foreach ($skillsProps as $skillName => $skillValues) {
+                $skill = $em->getRepository('AppBundle:Skills')->findOneByName($skillName);
+                
+                $charSkill = new CharacterSkills();
+                $charSkill->setCharacter($character);
+                $charSkill->setSkill($skill);
+                $charSkill->setRanks($skillValues['ranks']);
+                $charSkill->setMiscModifier($skillValues['misc_mod']);
+                $em->persist($charSkill);
+            }
+
+            $em->flush();
+            $em->clear();
+
+            $weaponsProps = $parameters['weapons'];
+
+            foreach ($weaponsProps as $weaponsProp) {
+                $weapon = new Weapons();
+                $weapon->setCharacter($character);
+                $weapon->setName($weaponsProp['attack']);
+                $weapon->setAttackBonus($weaponsProp['attack_bonus']);
+                $weapon->setDamage($weaponsProp['damage']);
+                $weapon->setCritical($weaponsProp['critical']);
+                $weapon->setWeaponRange($weaponsProp['range']);
+                $weapon->setType($weaponsProp['type']);
+                $weapon->setNotes($weaponsProp['notes']);
+                $em->persist($weapon);
+            }
+
+            $em->flush();
+            $em->clear();
 
             return $character->getId();
         }
-        catch (\Exception $ex) {
+        catch (Exception $ex) {
             return $ex->getMessage();
         }
     }
@@ -177,14 +217,14 @@ class MainController extends Controller
         return array(1);
     }
 
-    private function generateCharacterJson(int $characterId)
+    private function generateCharacterJson(int $characterId): array
     {
         $em = $this->getDoctrine()->getManager();
 
         $character = $em->getRepository('AppBundle:Characters')->find($characterId);
         $stats = $em->getRepository('AppBundle:Stats')->findOneByCharacter($character);
 
-        $return = array(
+        return array(
             'character' => array(
                 'name' => $character->getName(),
                 'player' => $character->getPlayer(),
@@ -231,7 +271,5 @@ class MainController extends Controller
                 'will_misc_modifier' => $stats->getWillMiscModifier(),
             ),
         );
-
-        return $return;
     }
 }

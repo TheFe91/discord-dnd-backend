@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Classes;
 use AppBundle\Entity\Skills;
 use AppBundle\Services\ConnectionService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -23,9 +24,15 @@ class FillInitialDataCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        $connection = ConnectionService::getConnection($this->getContainer());
+
+        $connection->exec("SET FOREIGN_KEY_CHECKS=0");
+
         $sql = "
+            DELETE FROM alignments;
             INSERT INTO `alignments` (`id`, `name`) VALUES
             (1, 'Lawful Good'),
             (2, 'Neutral Good'),
@@ -36,20 +43,78 @@ class FillInitialDataCommand extends ContainerAwareCommand
             (7, 'Lawful Evil'),
             (8, 'Neutral Evil'),
             (9, 'Chaotic Evil');
-            
-            INSERT INTO `classes` (`id`, `name`) VALUES
-            (1, 'Barbarian'),
-            (2, 'Bard'),
-            (3, 'Cleric'),
-            (4, 'Druid'),
-            (5, 'Fighter'),
-            (6, 'Monk'),
-            (7, 'Paladine'),
-            (8, 'Ranger'),
-            (9, 'Rogue'),
-            (10, 'Sorcerer'),
-            (11, 'Wizard');
-            
+        ";
+        $connection->exec($sql);
+
+        $class = new Classes();
+        $class->setName('Barbarian');
+        $class->setSkills([4,6,14,17,18,20,25,31,32]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Bard');
+        $class->setSkills([1,2,3,4,5,6,7,8,10,11,13,16,18,19,20,21,23,24,27,28,29,32,33,34]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Cleric');
+        $class->setSkills([5,6,8,15,19,24,29]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Druid');
+        $class->setSkills([5,6,8,14,15,19,20,24,25,29,30,31,32]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Fighter');
+        $class->setSkills([4,6,14,17,18,25,32]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Monk');
+        $class->setSkills([2,4,5,6,8,11,16,18,19,20,21,23,24,27,30,32,33]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Paladine');
+        $class->setSkills([5,6,8,14,15,19,24,25,27]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Ranger');
+        $class->setSkills([]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Rogue');
+        $class->setSkills([0]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Sorcerer');
+        $class->setSkills([0]);
+        $em->persist($class);
+        $em->flush();
+
+        $class = new Classes();
+        $class->setName('Wizard');
+        $class->setSkills([0]);
+        $em->persist($class);
+        $em->flush();
+
+
+        $sql = "
+            DELETE FROM deities;
             INSERT INTO `deities` (`id`, `name`) VALUES
             (1, 'Boccob'),
             (2, 'Corellon Larethian'),
@@ -70,7 +135,11 @@ class FillInitialDataCommand extends ContainerAwareCommand
             (17, 'Vecna'),
             (18, 'Wee Jas'),
             (19, 'Yondalla');
-            
+        ";
+        $connection->exec($sql);
+
+        $sql = "
+            DELETE FROM races;
             INSERT INTO `races` (`id`, `name`) VALUES
             (1, 'Human'),
             (2, 'Dwarf'),
@@ -79,7 +148,11 @@ class FillInitialDataCommand extends ContainerAwareCommand
             (5, 'Half-Elf'),
             (6, 'Half-Orc'),
             (7, 'Halfling');
+        ";
+        $connection->exec($sql);
 
+        $sql = "
+            DELETE FROM skills;
             INSERT INTO `skills` (`id`, `name`, `key_ability`) VALUES
             (1, 'Appraise', 'INT'),
             (2, 'Balance', 'DEX'),
@@ -117,7 +190,10 @@ class FillInitialDataCommand extends ContainerAwareCommand
             (34, 'Use Magic Device', 'CHA'),
             (35, 'Use Rope', 'DEX');
         ";
+        $connection->exec($sql);
 
-        ConnectionService::getConnection($this->getContainer())->exec($sql);
+        $connection->exec("SET FOREIGN_KEY_CHECKS=1");
+
+        return 0;
     }
 }

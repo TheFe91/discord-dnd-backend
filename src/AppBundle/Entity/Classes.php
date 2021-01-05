@@ -28,6 +28,14 @@ class Classes
      */
     private $name;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="simple_array")
+     */
+    private $skills;
+
+
 
     /**
      * Get id.
@@ -61,5 +69,29 @@ class Classes
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set skills.
+     *
+     * @param array $skills
+     *
+     * @return Classes
+     */
+    public function setSkills($skills)
+    {
+        $this->skills = $skills;
+
+        return $this;
+    }
+
+    /**
+     * Get skills.
+     *
+     * @return array
+     */
+    public function getSkills()
+    {
+        return $this->skills;
     }
 }
