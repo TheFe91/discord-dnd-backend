@@ -46,6 +46,8 @@ class FillInitialDataCommand extends ContainerAwareCommand
         ";
         $connection->exec($sql);
 
+        $connection->exec('DELETE FROM classes');
+
         $class = new Classes();
         $class->setName('Barbarian');
         $class->setSkills([4,6,14,17,18,20,25,31,32]);
@@ -90,25 +92,25 @@ class FillInitialDataCommand extends ContainerAwareCommand
 
         $class = new Classes();
         $class->setName('Ranger');
-        $class->setSkills([]);
+        $class->setSkills([4,5,6,14,15,16,18,19,20,21,24,25,26,30,31,32,35]);
         $em->persist($class);
         $em->flush();
 
         $class = new Classes();
         $class->setName('Rogue');
-        $class->setSkills([0]);
+        $class->setSkills([1,2,3,4,6,7,8,9,10,11,12,13,16,17,18,19,20,21,22,23,24,26,27,28,30,32,33,34,35]);
         $em->persist($class);
         $em->flush();
 
         $class = new Classes();
         $class->setName('Sorcerer');
-        $class->setSkills([0]);
+        $class->setSkills([3,5,6,19,24,29]);
         $em->persist($class);
         $em->flush();
 
         $class = new Classes();
         $class->setName('Wizard');
-        $class->setSkills([0]);
+        $class->setSkills([5,6,7,19,24,29]);
         $em->persist($class);
         $em->flush();
 
