@@ -5,12 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\AccessCodes;
 use AppBundle\Entity\Characters;
 use AppBundle\Entity\CharacterSkills;
+use AppBundle\Entity\Gear;
+use AppBundle\Entity\Items;
 use AppBundle\Entity\Stats;
 use AppBundle\Entity\Weapons;
 use AppBundle\Services\Responder;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,11 +25,18 @@ class MainController extends Controller
     public function indexAction(): ?Response
     {
         $em = $this->getDoctrine()->getManager();
+        $classes = $em->getRepository('AppBundle:Classes')->findAll();
+        $classes_skills = array();
+
+        foreach ($classes as $class) {
+            $classes_skills[$class->getId()] = $class->getSkills();
+        }
 
         return $this->render(
             '@App/creator.twig', [
+                'classes_skills' => $classes_skills,
                 'races' => $em->getRepository('AppBundle:Races')->findAll(),
-                'classes' => $em->getRepository('AppBundle:Classes')->findAll(),
+                'classes' => $classes,
                 'alignments' => $em->getRepository('AppBundle:Alignments')->findAll(),
                 'deities' => $em->getRepository('AppBundle:Deities')->findAll(),
                 'skills' => $em->getRepository('AppBundle:Skills')->findAll(),
@@ -192,7 +200,7 @@ class MainController extends Controller
             foreach ($weaponsProps as $weaponsProp) {
                 $weapon = new Weapons();
                 $weapon->setCharacter($character);
-                $weapon->setName($weaponsProp['attack']);
+                $weapon->setName($weaponsProp['name']);
                 $weapon->setAttackBonus($weaponsProp['attack_bonus']);
                 $weapon->setDamage($weaponsProp['damage']);
                 $weapon->setCritical($weaponsProp['critical']);
@@ -200,6 +208,34 @@ class MainController extends Controller
                 $weapon->setType($weaponsProp['type']);
                 $weapon->setNotes($weaponsProp['notes']);
                 $em->persist($weapon);
+            }
+
+            $gearProps = $parameters['gear'];
+
+            foreach ($gearProps as $gearProp) {
+                $gear = new Gear();
+                $gear->setCharacter($character);
+                $gear->setName($gearProp['name']);
+                $gear->setType($gearProp['type']);
+                $gear->setAcBonus($gearProp['ac_bonus']);
+                $gear->setMaxDex($gearProp['max_dex']);
+                $gear->setCheckPenalty($gearProp['check_penalty']);
+                $gear->setSpellFailure($gearProp['spell_failure']);
+                $gear->setSpeed($gearProp['spees']);
+                $gear->setWeight($gearProp['weight']);
+                $gear->setSpecialProperties($gearProp['special_properties']);
+                $em->persist($gear);
+            }
+            
+            $itemsProps = $parameters['items'];
+
+            foreach ($itemsProps as $itemsProp) {
+                $items = new Items();
+                $items->setCharacter($character);
+                $items->setName($itemsProp['name']);
+                $items->setQuantity($itemsProp['quantity']);
+                $items->setWeight($itemsProp['weight']);
+                $em->persist($items);
             }
 
             $em->flush();
@@ -223,6 +259,7 @@ class MainController extends Controller
 
         $character = $em->getRepository('AppBundle:Characters')->find($characterId);
         $stats = $em->getRepository('AppBundle:Stats')->findOneByCharacter($character);
+        $skills = $em->getRepository('AppBundle:CharacterSkills')->findByCharacter($character);
 
         return array(
             'character' => array(

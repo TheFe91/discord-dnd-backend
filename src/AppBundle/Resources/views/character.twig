@@ -10,6 +10,7 @@
     <div class="col-2">
         <label for="race">Race</label>
         <select name="character[race]" id="race" class="form-control">
+            <option value="">Please select...</option>
             {% for race in races %}
                 <option value="{{ race.getId }}">{{ race.getName }}</option>
             {% endfor %}
@@ -18,6 +19,7 @@
     <div class="col-2">
         <label for="class">Class</label>
         <select name="character[class]" id="class" class="form-control">
+            <option value="">Please select...</option>
             {% for class in classes %}
                 <option value="{{ class.getId }}">{{ class.getName }}</option>
             {% endfor %}
@@ -26,6 +28,7 @@
     <div class="col-2">
         <label for="alignment">Alignment</label>
         <select name="character[alignment]" id="alignment" class="form-control">
+            <option value="">Please select...</option>
             {% for alignment in alignments %}
                 <option value="{{ alignment.getId }}">{{ alignment.getName }}</option>
             {% endfor %}
@@ -34,6 +37,7 @@
     <div class="col-2">
         <label for="deity">Deity</label>
         <select name="character[deity]" id="deity" class="form-control">
+            <option value="">Please select...</option>
             {% for deity in deities %}
                 <option value="{{ deity.getId }}">{{ deity.getName }}</option>
             {% endfor %}

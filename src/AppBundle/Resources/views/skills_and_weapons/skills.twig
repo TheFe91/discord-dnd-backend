@@ -13,7 +13,7 @@
         </tr>
         {% for skill in skills %}
             <tr class="skills" data-ability-field-id="{{ skill.getName|lower }}_ability" data-rank-field-id="{{ skill.getName }}_ranks" data-misc-field-id="{{ skill.getName }}_misc_mod" data-skill="{{ skill.getName|lower }}">
-                <td class="align-middle">{{ skill.getName }}</td>
+                <td class="align-middle skill_names" id="skills_{{ skill.getId }}">{{ skill.getName }}</td>
                 <td class="align-middle text-center">&nbsp;{{ skill.getKeyAbility }}&nbsp;</td>
                 <td class="align-middle text-center" id="{{ skill.getName|lower }}">0</td>
                 <td class="align-middle text-center">&nbsp;=&nbsp;</td>

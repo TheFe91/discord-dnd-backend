@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Weapons
  *
- * @ORM\Table(name="weapons.twig")
+ * @ORM\Table(name="weapons")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WeaponsRepository")
  */
 class Weapons

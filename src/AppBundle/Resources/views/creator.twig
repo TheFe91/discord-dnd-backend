@@ -143,37 +143,39 @@
 
 <script>
 
+    const ac_vals = $('.ac-vals');
+    const add_feat = $('#add-feat');
     const add_gear = $('#add-gear');
     const add_item = $('#add-item');
-    const add_weapon = $('#add-weapon');
-    const add_feat = $('#add-feat');
+    const add_language = $('#add-language');
     const add_special_ability = $('#add-special-ability');
     const add_spell = $('#add-spell');
-    const add_language = $('#add-language');
-    const page_form = $('#page_form');
-    const submit = $('#submit');
-    const initiative_misc = $('#initiative_misc');
-    const str_score = $('#str-score');
-    const dex_score = $('#dex-score');
-    const con_score = $('#con-score');
-    const int_score = $('#int-score');
-    const wis_score = $('#wis-score');
+    const add_weapon = $('#add-weapon');
     const cha_score = $('#cha-score');
-    const ac_vals = $('.ac-vals');
-    const fortitude_vals = $('.fortitude-vals');
-    const reflex_vals = $('.reflex-vals');
-    const will_vals = $('.will-vals');
+    const classes_skills = {{ classes_skills|json_encode|raw }};
+    const con_score = $('#con-score');
+    const dex_score = $('#dex-score');
     const fortitude_ability_modifier = $('#fortitude_ability_modifier');
+    const fortitude_vals = $('.fortitude-vals');
+    const initiative_misc = $('#initiative_misc');
+    const int_score = $('#int-score');
+    const page_form = $('#page_form');
+    const player_class = $('#class');
     const reflex_ability_modifier = $('#reflex_ability_modifier');
+    const reflex_vals = $('.reflex-vals');
+    const str_score = $('#str-score');
+    const submit = $('#submit');
     const will_ability_modifier = $('#will_ability_modifier');
+    const will_vals = $('.will-vals');
+    const wis_score = $('#wis-score');
 
+    let feats = 0;
     let gear = 0;
     let items = 0;
-    let weapons = 0;
-    let feats = 0;
+    let languages = 0;
     let special_abilities = 0;
     let spells = 0;
-    let languages = 0;
+    let weapons = 0;
 
     const calcInitiative = () => {
         $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
@@ -215,6 +217,12 @@
         });
     };
 
+    player_class.on('change', function() {
+        const class_skills = classes_skills[$(this).val()].map((class_skill) => Number(class_skill));
+        $('.skill_names').css('color', 'black').css('font-weight', 'normal');
+        $.each(class_skills, (_, el) => $(`#skills_${el}`).css('color', 'red').css('font-weight', 'bold'));
+    });
+
     $('.scores').on('input', function() {
         const targetId = $(this).attr('id').replaceAll('-score', '-modifier');
         const modifierValue = Math.floor((Number($(this).val()) - 10) / 2);
@@ -224,6 +232,7 @@
     str_score.on('input', function() {
         const val = Math.floor((Number($(this).val()) - 10) / 2);
         $('.str_modifiers').text(val);
+        calcSkills();
     });
 
     dex_score.on('input', function() {
@@ -235,6 +244,7 @@
         calcInitiative();
         calcReflex();
         calcAC();
+        calcSkills();
     });
 
     con_score.on('input', function () {
@@ -242,6 +252,7 @@
         fortitude_ability_modifier.text(val);
         $('.con_modifiers').text(val);
         calcFortitude();
+        calcSkills();
     });
 
     int_score.on('input', function() {
@@ -255,11 +266,13 @@
         $('.wis_modifiers').text(val);
         will_ability_modifier.text(val);
         calcWill();
+        calcSkills();
     });
 
     cha_score.on('input', function() {
         const val = Math.floor((Number($(this).val()) - 10) / 2);
         $('.cha_modifiers').text(val);
+        calcSkills();
     });
 
     ac_vals.on('input', calcAC);
@@ -350,13 +363,13 @@
                 <td>
                     <table>
                         <tr>
-                            <th class="text-center">ATTACK</th>
+                            <th class="text-center">NAME</th>
                             <th class="text-center">ATTACK BONUS</th>
                             <th class="text-center">DAMAGE</th>
                             <th class="text-center">CRITICAL</th>
                         </tr>
                         <tr>
-                            <td><input type="text" name="weapons[${weapons}][attack]" class="form-control"></td>
+                            <td><input type="text" name="weapons[${weapons}][name]" class="form-control"></td>
                             <td><input type="text" name="weapons[${weapons}][attack_bonus]" class="form-control"></td>
                             <td><input type="text" name="weapons[${weapons}][damage]" class="form-control"></td>
                             <td><input type="text" name="weapons[${weapons}][critical]" class="form-control"></td>
@@ -438,9 +451,9 @@
                             <th class="text-center">LEVEL</th>
                         </tr>
                         <tr>
-                            <td><input type="text" id="spells_${spells}" name="spells[${spells}][name]" class="form-control"></td>
+                            <td><input type="text" id="personal_spells_${spells}" name="personal_spells[${spells}][name]" class="form-control"></td>
                             <td>
-                                <select id="spells_${spells}" name="spells[${spells}][level]" class="form-control">
+                                <select id="spells_${spells}" name="personal_spells[${spells}][level]" class="form-control">
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -488,6 +501,11 @@
     submit.on('click', () => {
         if ($('#access_code').val() === '') {
             $('#errorMessage').text('The access code is empty!');
+            $('#errorModal').modal('show');
+            return;
+        }
+        if ($('#race').val() === '' || $('#class').val() === '' || $('#alignment').val() === '' || $('#deity').val() === '') {
+            $('#errorMessage').text('Race, class, alignment and deity must NOT be empty!');
             $('#errorModal').modal('show');
             return;
         }
