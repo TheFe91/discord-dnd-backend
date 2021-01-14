@@ -5,8 +5,15 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\AccessCodes;
 use AppBundle\Entity\Characters;
 use AppBundle\Entity\CharacterSkills;
+use AppBundle\Entity\DailySpells;
+use AppBundle\Entity\Feats;
 use AppBundle\Entity\Gear;
 use AppBundle\Entity\Items;
+use AppBundle\Entity\KnownSpells;
+use AppBundle\Entity\Languages;
+use AppBundle\Entity\Money;
+use AppBundle\Entity\SpecialAbilities;
+use AppBundle\Entity\Spells;
 use AppBundle\Entity\Stats;
 use AppBundle\Entity\Weapons;
 use AppBundle\Services\Responder;
@@ -154,6 +161,8 @@ class MainController extends Controller
             $stats->setSpeed($statsProps['general']['speed']);
             $stats->setSpellResistance($statsProps['general']['spell_resistance']);
             $stats->setBaseAttackBonus(self::calculateBAB($statsProps['general']['base_attack_bonus']));
+            $stats->setSpellSave($statsProps['general']['spell_save']);
+            $stats->setArcaneSpellFailure($statsProps['general']['arcane_spell_failure']);
 
             /* AC */
             $stats->setArmorBonus($statsProps['ac']['armor_bonus']);
@@ -210,6 +219,9 @@ class MainController extends Controller
                 $em->persist($weapon);
             }
 
+            $em->flush();
+            $em->clear();
+
             $gearProps = $parameters['gear'];
 
             foreach ($gearProps as $gearProp) {
@@ -226,6 +238,9 @@ class MainController extends Controller
                 $gear->setSpecialProperties($gearProp['special_properties']);
                 $em->persist($gear);
             }
+
+            $em->flush();
+            $em->clear();
             
             $itemsProps = $parameters['items'];
 
@@ -236,6 +251,82 @@ class MainController extends Controller
                 $items->setQuantity($itemsProp['quantity']);
                 $items->setWeight($itemsProp['weight']);
                 $em->persist($items);
+            }
+
+            $em->flush();
+            $em->clear();
+
+            $featNames = $parameters['feats'];
+
+            foreach ($featNames as $featName) {
+                $feat = new Feats();
+                $feat->setCharacter($character);
+                $feat->setName($featName);
+                $em->persist($feat);
+            }
+
+            $em->flush();
+            $em->clear();
+
+            $saNames = $parameters['special_abilities'];
+
+            foreach ($saNames as $saName) {
+                $sa = new SpecialAbilities();
+                $sa->setCharacter($character);
+                $sa->setName($saName);
+                $em->persist($sa);
+            }
+
+            $em->flush();
+            $em->clear();
+
+            $personalSpellsProps = $parameters['personal_spells'];
+
+            foreach ($personalSpellsProps as $personalSpellsProp) {
+                $spell = new Spells();
+                $spell->setCharacter($character);
+                $spell->setName($personalSpellsProp['name']);
+                $spell->setLevel($personalSpellsProp['level']);
+                $em->persist($spell);
+            }
+
+            $em->flush();
+            $em->clear();
+            
+            $dailySpellsProps = $parameters['daily_spells'];
+
+            $dailySpells = new DailySpells();
+            $dailySpells->setCharacter($character);
+
+            foreach ($dailySpellsProps as $propName => $value) {
+                $setter = 'set' . implode('', array_map('ucwords', explode('_', $propName)));
+                $dailySpells->{$setter}($value);
+            }
+
+            $em->persist($dailySpells);
+            $em->flush();
+            $em->clear();
+
+            $moneyProps = $parameters['money'];
+
+            $money = new Money();
+            $money->setCharacter($character);
+            $money->setCopperPiece($moneyProps['copper']);
+            $money->setSilverPiece($moneyProps['silver']);
+            $money->setGoldPiece($moneyProps['gold']);
+            $money->setPlatinumPiece($moneyProps['platinum']);
+
+            $em->persist($money);
+            $em->flush();
+            $em->clear();
+
+            $languagesProps = $parameters['languages'];
+
+            foreach ($languagesProps as $lang) {
+                $language = new Languages();
+                $language->setCharacter($character);
+                $language->setLanguage($lang);
+                $em->persist($language);
             }
 
             $em->flush();

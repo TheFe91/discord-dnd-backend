@@ -6,11 +6,11 @@
     </div>
     <div class="col-2">
         <label for="spell_save" class="form-control-label">Spell Save</label>
-        <input type="number" id="spell_save" name="spell_save" class="form-control" placeholder="Type here...">
+        <input type="number" id="spell_save" name="stats[general][spell_save]" class="form-control" placeholder="Type here...">
     </div>
     <div class="col-2">
         <label for="arcane_spell_failure" class="form-control-label">Arcane Spell Failure (%)</label>
-        <input type="number" name="arcane_spell_failure" id="arcane_spell_failure" class="form-control" placeholder="Type here..." min="0" max="99">
+        <input type="number" name="stats[general][arcane_spell_failure]" id="arcane_spell_failure" class="form-control" placeholder="Type here..." min="0" max="99">
     </div>
     <div class="col-5">
         <table>
@@ -22,19 +22,19 @@
                 <td class="text-center">BONUS SPELLS</td>
             </tr>
             <tr>
-                <td><input type="number" name="spells[0][spells_known]" class="form-control" value="0"></td>
-                <td><input type="number" name="spells[0][spell_save_dc]" class="form-control" value="0"></td>
+                <td><input type="number" name="daily_spells[spells_known_0]" class="form-control" value="0"></td>
+                <td><input type="number" name="daily_spells[spell_save_dc_0]" class="form-control" value="0"></td>
                 <td class="align-middle text-center">0</td>
-                <td><input type="number" name="spells[0][spells_per_day]" class="form-control" value="0"></td>
+                <td><input type="number" name="daily_spells[spells_per_day_0]" class="form-control" value="0"></td>
                 <td class="align-middle text-center">0</td>
             </tr>
             {% for i in 1..9 %}
                 <tr>
-                    <td><input type="number" name="spells[{{ i }}][spells_known]" class="form-control" value="0"></td>
-                    <td><input type="number" name="spells[{{ i }}][spell_save_dc]" class="form-control" value="0"></td>
+                    <td><input type="number" name="daily_spells[spells_daily_{{ i }}]" class="form-control" value="0"></td>
+                    <td><input type="number" name="daily_spells[spell_save_dc_{{ i }}]" class="form-control" value="0"></td>
                     <td class="align-middle text-center">{{ i }}</td>
-                    <td><input type="number" name="spells[{{ i }}][spells_per_day]" class="form-control" value="0"></td>
-                    <td><input type="number" name="spells[{{ i }}][bonus_spells]" class="form-control" value="0"></td>
+                    <td><input type="number" name="daily_spells[spells_per_day_{{ i }}]" class="form-control" value="0"></td>
+                    <td><input type="number" name="daily_spells[bonus_spells_{{ i }}]" class="form-control" value="0"></td>
                 </tr>
             {% endfor %}
         </table>

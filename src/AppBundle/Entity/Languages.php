@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Spells
+ * Languages
  *
- * @ORM\Table(name="spells")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SpellsRepository")
+ * @ORM\Table(name="languages")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LanguagesRepository")
  */
-class Spells
+class Languages
 {
     /**
      * @var int
@@ -30,17 +30,9 @@ class Spells
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=20)
      */
-    private $name;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $level;
-
+    private $language;
 
 
 
@@ -55,51 +47,27 @@ class Spells
     }
 
     /**
-     * Set name.
+     * Set language.
      *
-     * @param string $name
+     * @param string $language
      *
-     * @return Spells
+     * @return Languages
      */
-    public function setName($name)
+    public function setLanguage($language)
     {
-        $this->name = $name;
+        $this->language = $language;
 
         return $this;
     }
 
     /**
-     * Get name.
+     * Get language.
      *
      * @return string
      */
-    public function getName()
+    public function getLanguage()
     {
-        return $this->name;
-    }
-
-    /**
-     * Set level.
-     *
-     * @param int $level
-     *
-     * @return Spells
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level.
-     *
-     * @return int
-     */
-    public function getLevel()
-    {
-        return $this->level;
+        return $this->language;
     }
 
     /**
@@ -107,7 +75,7 @@ class Spells
      *
      * @param \AppBundle\Entity\Characters|null $character
      *
-     * @return Spells
+     * @return Languages
      */
     public function setCharacter(\AppBundle\Entity\Characters $character = null)
     {
