@@ -509,6 +509,19 @@
             $('#errorModal').modal('show');
             return;
         }
+        if (!($('#base_attack_bonus').val().match(/[ 0-9+\/]/))) {
+            $('#errorMessage').html(`
+                <span>The base attack bonus (BAB) can only contain:</span>
+                <ul>
+                    <li>Numbers from 0 to 9</li>
+                    <li>Slashes</li>
+                    <li>Spaces</li>
+                    <li>+ sign</li>
+                </ul>
+            `);
+            $('#errorModal').modal('show');
+            return;
+        }
         $.post(
             '{{ url('characterSubmitted_url') }}',
             page_form.serialize(),

@@ -160,7 +160,7 @@ class MainController extends Controller
             $stats->setDamageReduction($statsProps['general']['damage_reduction']);
             $stats->setSpeed($statsProps['general']['speed']);
             $stats->setSpellResistance($statsProps['general']['spell_resistance']);
-            $stats->setBaseAttackBonus(self::calculateBAB($statsProps['general']['base_attack_bonus']));
+            $stats->setBaseAttackBonus(array_map('trim', explode('/', $statsProps['general']['base_attack_bonus'])));
             $stats->setSpellSave(NotEmpty::getNotEmpty($statsProps['general']['spell_save'], 0));
             $stats->setArcaneSpellFailure(NotEmpty::getNotEmpty($statsProps['general']['arcane_spell_failure'], 0));
 
@@ -346,11 +346,6 @@ class MainController extends Controller
         catch (Exception $ex) {
             return $ex->getMessage();
         }
-    }
-
-    private function calculateBAB(string $bab) : array
-    {
-        return array(1);
     }
 
     private function generateCharacterJson(int $characterId): array
