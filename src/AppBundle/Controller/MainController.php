@@ -16,6 +16,7 @@ use AppBundle\Entity\SpecialAbilities;
 use AppBundle\Entity\Spells;
 use AppBundle\Entity\Stats;
 use AppBundle\Entity\Weapons;
+use AppBundle\Services\NotEmpty;
 use AppBundle\Services\Responder;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -99,7 +100,7 @@ class MainController extends Controller
             return Responder::generateResponse(array('data' => self::generateCharacterJson($result)));
         }
         else {
-            return Responder::generateError($result, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Responder::generateError($result);
         }
     }
 
@@ -140,7 +141,6 @@ class MainController extends Controller
 
             $em->persist($character);
             $em->flush();
-            $em->clear();
 
             $statsProps = $parameters['stats'];
 
@@ -161,8 +161,8 @@ class MainController extends Controller
             $stats->setSpeed($statsProps['general']['speed']);
             $stats->setSpellResistance($statsProps['general']['spell_resistance']);
             $stats->setBaseAttackBonus(self::calculateBAB($statsProps['general']['base_attack_bonus']));
-            $stats->setSpellSave($statsProps['general']['spell_save']);
-            $stats->setArcaneSpellFailure($statsProps['general']['arcane_spell_failure']);
+            $stats->setSpellSave(NotEmpty::getNotEmpty($statsProps['general']['spell_save'], 0));
+            $stats->setArcaneSpellFailure(NotEmpty::getNotEmpty($statsProps['general']['arcane_spell_failure'], 0));
 
             /* AC */
             $stats->setArmorBonus($statsProps['ac']['armor_bonus']);
@@ -186,7 +186,6 @@ class MainController extends Controller
 
             $em->persist($stats);
             $em->flush();
-            $em->clear();
 
             $skillsProps = $parameters['skills'];
 
@@ -202,110 +201,120 @@ class MainController extends Controller
             }
 
             $em->flush();
-            $em->clear();
 
-            $weaponsProps = $parameters['weapons'];
+            if (isset($parameters['weapons'])) {
+                $weaponsProps = $parameters['weapons'];
 
-            foreach ($weaponsProps as $weaponsProp) {
-                $weapon = new Weapons();
-                $weapon->setCharacter($character);
-                $weapon->setName($weaponsProp['name']);
-                $weapon->setAttackBonus($weaponsProp['attack_bonus']);
-                $weapon->setDamage($weaponsProp['damage']);
-                $weapon->setCritical($weaponsProp['critical']);
-                $weapon->setWeaponRange($weaponsProp['range']);
-                $weapon->setType($weaponsProp['type']);
-                $weapon->setNotes($weaponsProp['notes']);
-                $em->persist($weapon);
+                foreach ($weaponsProps as $weaponsProp) {
+                    $weapon = new Weapons();
+                    $weapon->setCharacter($character);
+                    $weapon->setName($weaponsProp['name']);
+                    $weapon->setAttackBonus($weaponsProp['attack_bonus']);
+                    $weapon->setDamage($weaponsProp['damage']);
+                    $weapon->setCritical($weaponsProp['critical']);
+                    $weapon->setWeaponRange($weaponsProp['range']);
+                    $weapon->setType($weaponsProp['type']);
+                    $weapon->setNotes($weaponsProp['notes']);
+                    $em->persist($weapon);
+                }
+
+                $em->flush();
             }
 
-            $em->flush();
-            $em->clear();
+            if (isset($parameters['gear'])) {
 
-            $gearProps = $parameters['gear'];
+                $gearProps = $parameters['gear'];
 
-            foreach ($gearProps as $gearProp) {
-                $gear = new Gear();
-                $gear->setCharacter($character);
-                $gear->setName($gearProp['name']);
-                $gear->setType($gearProp['type']);
-                $gear->setAcBonus($gearProp['ac_bonus']);
-                $gear->setMaxDex($gearProp['max_dex']);
-                $gear->setCheckPenalty($gearProp['check_penalty']);
-                $gear->setSpellFailure($gearProp['spell_failure']);
-                $gear->setSpeed($gearProp['spees']);
-                $gear->setWeight($gearProp['weight']);
-                $gear->setSpecialProperties($gearProp['special_properties']);
-                $em->persist($gear);
+                foreach ($gearProps as $gearProp) {
+                    $gear = new Gear();
+                    $gear->setCharacter($character);
+                    $gear->setName($gearProp['name']);
+                    $gear->setType($gearProp['type']);
+                    $gear->setAcBonus($gearProp['ac_bonus']);
+                    $gear->setMaxDex($gearProp['max_dex']);
+                    $gear->setCheckPenalty(NotEmpty::getNotEmpty($gearProp['check_penalty'], 0));
+                    $gear->setSpellFailure(NotEmpty::getNotEmpty($gearProp['spell_failure'], 0));
+                    $gear->setSpeed(NotEmpty::getNotEmpty($gearProp['speed'], 0));
+                    $gear->setWeight(NotEmpty::getNotEmpty($gearProp['weight'], 0));
+                    $gear->setSpecialProperties(NotEmpty::getNotEmpty($gearProp['special_properties'], 0));
+                    $em->persist($gear);
+                }
+
+                $em->flush();
             }
 
-            $em->flush();
-            $em->clear();
-            
-            $itemsProps = $parameters['items'];
+            if (isset($parameters['items'])) {
+                $itemsProps = $parameters['items'];
 
-            foreach ($itemsProps as $itemsProp) {
-                $items = new Items();
-                $items->setCharacter($character);
-                $items->setName($itemsProp['name']);
-                $items->setQuantity($itemsProp['quantity']);
-                $items->setWeight($itemsProp['weight']);
-                $em->persist($items);
+                foreach ($itemsProps as $itemsProp) {
+                    $items = new Items();
+                    $items->setCharacter($character);
+                    $items->setName($itemsProp['name']);
+                    $items->setQuantity($itemsProp['quantity']);
+                    $items->setWeight($itemsProp['weight']);
+                    $em->persist($items);
+                }
+
+                $em->flush();
             }
 
-            $em->flush();
-            $em->clear();
+            if (isset($parameters['feat'])) {
+                $featNames = $parameters['feat'];
 
-            $featNames = $parameters['feats'];
+                foreach ($featNames as $featName) {
+                    $feat = new Feats();
+                    $feat->setCharacter($character);
+                    $feat->setName($featName);
+                    $em->persist($feat);
+                }
 
-            foreach ($featNames as $featName) {
-                $feat = new Feats();
-                $feat->setCharacter($character);
-                $feat->setName($featName);
-                $em->persist($feat);
+                $em->flush();
             }
 
-            $em->flush();
-            $em->clear();
+            if (isset($parameters['special_ability'])) {
+                $saNames = $parameters['special_ability'];
 
-            $saNames = $parameters['special_abilities'];
+                foreach ($saNames as $saName) {
+                    $sa = new SpecialAbilities();
+                    $sa->setCharacter($character);
+                    $sa->setName($saName);
+                    $em->persist($sa);
+                }
 
-            foreach ($saNames as $saName) {
-                $sa = new SpecialAbilities();
-                $sa->setCharacter($character);
-                $sa->setName($saName);
-                $em->persist($sa);
+                $em->flush();
             }
 
-            $em->flush();
-            $em->clear();
+            if (isset($parameters['personal_spells'])) {
+                $personalSpellsProps = $parameters['personal_spells'];
 
-            $personalSpellsProps = $parameters['personal_spells'];
+                foreach ($personalSpellsProps as $personalSpellsProp) {
+                    $spell = new Spells();
+                    $spell->setCharacter($character);
+                    $spell->setName($personalSpellsProp['name']);
+                    $spell->setLevel($personalSpellsProp['level']);
+                    $em->persist($spell);
+                }
 
-            foreach ($personalSpellsProps as $personalSpellsProp) {
-                $spell = new Spells();
-                $spell->setCharacter($character);
-                $spell->setName($personalSpellsProp['name']);
-                $spell->setLevel($personalSpellsProp['level']);
-                $em->persist($spell);
+                $em->flush();
             }
 
-            $em->flush();
-            $em->clear();
-            
-            $dailySpellsProps = $parameters['daily_spells'];
+            if (isset($parameters['daily_spells'])) {
+                $dailySpellsProps = $parameters['daily_spells'];
 
-            $dailySpells = new DailySpells();
-            $dailySpells->setCharacter($character);
+                $dailySpells = new DailySpells();
+                $dailySpells->setCharacter($character);
 
-            foreach ($dailySpellsProps as $propName => $value) {
-                $setter = 'set' . implode('', array_map('ucwords', explode('_', $propName)));
-                $dailySpells->{$setter}($value);
+                foreach ($dailySpellsProps as $propName => $value) {
+                    $setter = 'set' . implode('', array_map('ucwords', explode('_', $propName)));
+                    if ($setter !== 'setSpellsKnown0') {
+                        $dailySpells->{$setter}($value);
+                    }
+                }
+
+                $em->persist($dailySpells);
+                $em->flush();
             }
 
-            $em->persist($dailySpells);
-            $em->flush();
-            $em->clear();
 
             $moneyProps = $parameters['money'];
 
@@ -318,19 +327,19 @@ class MainController extends Controller
 
             $em->persist($money);
             $em->flush();
-            $em->clear();
 
-            $languagesProps = $parameters['languages'];
+            if (isset($parameters['languages'])) {
+                $languagesProps = $parameters['languages'];
 
-            foreach ($languagesProps as $lang) {
-                $language = new Languages();
-                $language->setCharacter($character);
-                $language->setLanguage($lang);
-                $em->persist($language);
+                foreach ($languagesProps as $lang) {
+                    $language = new Languages();
+                    $language->setCharacter($character);
+                    $language->setLanguage($lang);
+                    $em->persist($language);
+                }
+
+                $em->flush();
             }
-
-            $em->flush();
-            $em->clear();
 
             return $character->getId();
         }

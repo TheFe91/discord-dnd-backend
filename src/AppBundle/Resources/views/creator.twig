@@ -514,7 +514,8 @@
             page_form.serialize(),
             (data) => {
                 if (data.result === 'KO') {
-                    $('#errorMessage').text(data.error);
+                    console.error(data.error);
+                    $('#errorMessage').text('An error occurred saving your character');
                     $('#errorModal').modal('show');
                 }
                 else {

@@ -32,7 +32,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_0 = 0;
+    private $spells_known_0 = 0;
 
     /**
      * @var int
@@ -53,7 +53,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_1 = 0;
+    private $spells_known_1 = 0;
 
     /**
      * @var int
@@ -81,7 +81,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_2 = 0;
+    private $spells_known_2 = 0;
 
     /**
      * @var int
@@ -109,7 +109,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_3 = 0;
+    private $spells_known_3 = 0;
 
     /**
      * @var int
@@ -137,7 +137,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_4 = 0;
+    private $spells_known_4 = 0;
 
     /**
      * @var int
@@ -165,7 +165,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_5 = 0;
+    private $spells_known_5 = 0;
 
     /**
      * @var int
@@ -193,7 +193,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_6 = 0;
+    private $spells_known_6 = 0;
 
     /**
      * @var int
@@ -221,7 +221,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_7 = 0;
+    private $spells_known_7 = 0;
 
     /**
      * @var int
@@ -249,7 +249,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_8 = 0;
+    private $spells_known_8 = 0;
 
     /**
      * @var int
@@ -277,7 +277,7 @@ class DailySpells
      *
      * @ORM\Column(type="integer")
      */
-    private $known_spells_9 = 0;
+    private $spells_known_9 = 0;
 
     /**
      * @var int
@@ -302,6 +302,7 @@ class DailySpells
 
 
 
+
     /**
      * Get id.
      *
@@ -313,27 +314,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells0.
+     * Set spellsKnown0.
      *
-     * @param int $knownSpells0
+     * @param int $spellsKnown0
      *
      * @return DailySpells
      */
-    public function setKnownSpells0($knownSpells0)
+    public function setSpellsKnown0($spellsKnown0)
     {
-        $this->known_spells_0 = $knownSpells0;
+        $this->spells_known_0 = $spellsKnown0;
 
         return $this;
     }
 
     /**
-     * Get knownSpells0.
+     * Get spellsKnown0.
      *
      * @return int
      */
-    public function getKnownSpells0()
+    public function getSpellsKnown0()
     {
-        return $this->known_spells_0;
+        return $this->spells_known_0;
     }
 
     /**
@@ -385,27 +386,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells1.
+     * Set spellsKnown1.
      *
-     * @param int $knownSpells1
+     * @param int $spellsKnown1
      *
      * @return DailySpells
      */
-    public function setKnownSpells1($knownSpells1)
+    public function setSpellsKnown1($spellsKnown1)
     {
-        $this->known_spells_1 = $knownSpells1;
+        $this->spells_known_1 = $spellsKnown1;
 
         return $this;
     }
 
     /**
-     * Get knownSpells1.
+     * Get spellsKnown1.
      *
      * @return int
      */
-    public function getKnownSpells1()
+    public function getSpellsKnown1()
     {
-        return $this->known_spells_1;
+        return $this->spells_known_1;
     }
 
     /**
@@ -481,27 +482,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells2.
+     * Set spellsKnown2.
      *
-     * @param int $knownSpells2
+     * @param int $spellsKnown2
      *
      * @return DailySpells
      */
-    public function setKnownSpells2($knownSpells2)
+    public function setSpellsKnown2($spellsKnown2)
     {
-        $this->known_spells_2 = $knownSpells2;
+        $this->spells_known_2 = $spellsKnown2;
 
         return $this;
     }
 
     /**
-     * Get knownSpells2.
+     * Get spellsKnown2.
      *
      * @return int
      */
-    public function getKnownSpells2()
+    public function getSpellsKnown2()
     {
-        return $this->known_spells_2;
+        return $this->spells_known_2;
     }
 
     /**
@@ -577,27 +578,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells3.
+     * Set spellsKnown3.
      *
-     * @param int $knownSpells3
+     * @param int $spellsKnown3
      *
      * @return DailySpells
      */
-    public function setKnownSpells3($knownSpells3)
+    public function setSpellsKnown3($spellsKnown3)
     {
-        $this->known_spells_3 = $knownSpells3;
+        $this->spells_known_3 = $spellsKnown3;
 
         return $this;
     }
 
     /**
-     * Get knownSpells3.
+     * Get spellsKnown3.
      *
      * @return int
      */
-    public function getKnownSpells3()
+    public function getSpellsKnown3()
     {
-        return $this->known_spells_3;
+        return $this->spells_known_3;
     }
 
     /**
@@ -673,27 +674,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells4.
+     * Set spellsKnown4.
      *
-     * @param int $knownSpells4
+     * @param int $spellsKnown4
      *
      * @return DailySpells
      */
-    public function setKnownSpells4($knownSpells4)
+    public function setSpellsKnown4($spellsKnown4)
     {
-        $this->known_spells_4 = $knownSpells4;
+        $this->spells_known_4 = $spellsKnown4;
 
         return $this;
     }
 
     /**
-     * Get knownSpells4.
+     * Get spellsKnown4.
      *
      * @return int
      */
-    public function getKnownSpells4()
+    public function getSpellsKnown4()
     {
-        return $this->known_spells_4;
+        return $this->spells_known_4;
     }
 
     /**
@@ -769,27 +770,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells5.
+     * Set spellsKnown5.
      *
-     * @param int $knownSpells5
+     * @param int $spellsKnown5
      *
      * @return DailySpells
      */
-    public function setKnownSpells5($knownSpells5)
+    public function setSpellsKnown5($spellsKnown5)
     {
-        $this->known_spells_5 = $knownSpells5;
+        $this->spells_known_5 = $spellsKnown5;
 
         return $this;
     }
 
     /**
-     * Get knownSpells5.
+     * Get spellsKnown5.
      *
      * @return int
      */
-    public function getKnownSpells5()
+    public function getSpellsKnown5()
     {
-        return $this->known_spells_5;
+        return $this->spells_known_5;
     }
 
     /**
@@ -865,27 +866,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells6.
+     * Set spellsKnown6.
      *
-     * @param int $knownSpells6
+     * @param int $spellsKnown6
      *
      * @return DailySpells
      */
-    public function setKnownSpells6($knownSpells6)
+    public function setSpellsKnown6($spellsKnown6)
     {
-        $this->known_spells_6 = $knownSpells6;
+        $this->spells_known_6 = $spellsKnown6;
 
         return $this;
     }
 
     /**
-     * Get knownSpells6.
+     * Get spellsKnown6.
      *
      * @return int
      */
-    public function getKnownSpells6()
+    public function getSpellsKnown6()
     {
-        return $this->known_spells_6;
+        return $this->spells_known_6;
     }
 
     /**
@@ -961,27 +962,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells7.
+     * Set spellsKnown7.
      *
-     * @param int $knownSpells7
+     * @param int $spellsKnown7
      *
      * @return DailySpells
      */
-    public function setKnownSpells7($knownSpells7)
+    public function setSpellsKnown7($spellsKnown7)
     {
-        $this->known_spells_7 = $knownSpells7;
+        $this->spells_known_7 = $spellsKnown7;
 
         return $this;
     }
 
     /**
-     * Get knownSpells7.
+     * Get spellsKnown7.
      *
      * @return int
      */
-    public function getKnownSpells7()
+    public function getSpellsKnown7()
     {
-        return $this->known_spells_7;
+        return $this->spells_known_7;
     }
 
     /**
@@ -1057,27 +1058,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells8.
+     * Set spellsKnown8.
      *
-     * @param int $knownSpells8
+     * @param int $spellsKnown8
      *
      * @return DailySpells
      */
-    public function setKnownSpells8($knownSpells8)
+    public function setSpellsKnown8($spellsKnown8)
     {
-        $this->known_spells_8 = $knownSpells8;
+        $this->spells_known_8 = $spellsKnown8;
 
         return $this;
     }
 
     /**
-     * Get knownSpells8.
+     * Get spellsKnown8.
      *
      * @return int
      */
-    public function getKnownSpells8()
+    public function getSpellsKnown8()
     {
-        return $this->known_spells_8;
+        return $this->spells_known_8;
     }
 
     /**
@@ -1153,27 +1154,27 @@ class DailySpells
     }
 
     /**
-     * Set knownSpells9.
+     * Set spellsKnown9.
      *
-     * @param int $knownSpells9
+     * @param int $spellsKnown9
      *
      * @return DailySpells
      */
-    public function setKnownSpells9($knownSpells9)
+    public function setSpellsKnown9($spellsKnown9)
     {
-        $this->known_spells_9 = $knownSpells9;
+        $this->spells_known_9 = $spellsKnown9;
 
         return $this;
     }
 
     /**
-     * Get knownSpells9.
+     * Get spellsKnown9.
      *
      * @return int
      */
-    public function getKnownSpells9()
+    public function getSpellsKnown9()
     {
-        return $this->known_spells_9;
+        return $this->spells_known_9;
     }
 
     /**
