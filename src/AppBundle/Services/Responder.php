@@ -10,7 +10,7 @@ class Responder
 {
     public static function generateResponse($data = array(), $statusCode = 200): JsonResponse
     {
-        return new JsonResponse(array_merge(array('result' => 'OK'), $data), $statusCode);
+        return new JsonResponse(array_merge(array('result' => 'OK'), is_array($data) ? $data : array($data)), $statusCode);
     }
 
     public static function generateError($message, $statusCode = 200): JsonResponse

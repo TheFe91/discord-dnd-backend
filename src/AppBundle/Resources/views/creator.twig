@@ -522,24 +522,19 @@
             $('#errorModal').modal('show');
             return;
         }
+
         $.post(
             '{{ url('characterSubmitted_url') }}',
             page_form.serialize(),
-            (data) => {
-                if (data.result === 'KO') {
-                    console.error(data.error);
+            ({ result, error, characterId }) => {
+                if (result === 'KO') {
+                    console.error(error);
                     $('#errorMessage').text('An error occurred saving your character');
                     $('#errorModal').modal('show');
                 }
                 else {
+                    $('#successMessage').html(`Your character id is: <strong>${characterId}</strong><br>Write it down, you won't have other oppurtunities to see it`);
                     $('#successModal').modal('show');
-                    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data.data));
-                    const downloadAnchorNode = document.createElement('a');
-                    downloadAnchorNode.setAttribute("href", dataStr);
-                    downloadAnchorNode.setAttribute("download", "character.json");
-                    document.body.appendChild(downloadAnchorNode);
-                    downloadAnchorNode.click();
-                    downloadAnchorNode.remove();
                 }
             }
         );

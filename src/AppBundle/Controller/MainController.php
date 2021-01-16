@@ -9,7 +9,6 @@ use AppBundle\Entity\DailySpells;
 use AppBundle\Entity\Feats;
 use AppBundle\Entity\Gear;
 use AppBundle\Entity\Items;
-use AppBundle\Entity\KnownSpells;
 use AppBundle\Entity\Languages;
 use AppBundle\Entity\Money;
 use AppBundle\Entity\SpecialAbilities;
@@ -18,6 +17,7 @@ use AppBundle\Entity\Stats;
 use AppBundle\Entity\Weapons;
 use AppBundle\Services\NotEmpty;
 use AppBundle\Services\Responder;
+use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +70,7 @@ class MainController extends Controller
         $code = self::randomPassword();
         $accessCode = new AccessCodes();
         $accessCode->setCode($code);
-        $exp = new \DateTime('now +24 hours');
+        $exp = new DateTime('now +24 hours');
         $accessCode->setExpirationDatetime($exp);
         $em->persist($accessCode);
         $em->flush();
@@ -86,18 +86,18 @@ class MainController extends Controller
     public function characterSubmitted(Request $request): Response
     {
         $parameters = $request->request->all();
-//        $accessCode = $parameters['access_code'];
-//
-//        $em = $this->getDoctrine()->getManager();
-//
-//        if (count($em->getRepository('AppBundle:AccessCodes')->findOneBy(array('code' => $accessCode))) === 0) {
-//            return Responder::generateError('Your code is invalid');
-//        }
+        $accessCode = $parameters['access_code'];
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (count($em->getRepository('AppBundle:AccessCodes')->findOneBy(array('code' => $accessCode))) === 0) {
+            return Responder::generateError('Your code is invalid');
+        }
 
         $result = self::saveCharacter($parameters);
 
         if (is_numeric($result)) {
-            return Responder::generateResponse(array('data' => self::generateCharacterJson($result)));
+            return Responder::generateResponse(array('characterId' => $result));
         }
         else {
             return Responder::generateError($result);
@@ -131,10 +131,10 @@ class MainController extends Controller
             $character->setAlignment($em->getRepository('AppBundle:Alignments')->find($characterProps['alignment']));
             $character->setDeity($em->getRepository('AppBundle:Deities')->find($characterProps['deity']));
             $character->setSize($characterProps['size']);
-            $character->setAge($characterProps['age']);
+            $character->setAge(NotEmpty::getNotEmpty($characterProps['age'], 0));
             $character->setGender($characterProps['gender']);
-            $character->setHeight($characterProps['height']);
-            $character->setWeight($characterProps['weight']);
+            $character->setHeight(NotEmpty::getNotEmpty($characterProps['height'], 0));
+            $character->setWeight(NotEmpty::getNotEmpty($characterProps['weight'], 0));
             $character->setEyes($characterProps['eyes']);
             $character->setHair($characterProps['hair']);
             $character->setSkin($characterProps['skin']);
@@ -148,12 +148,12 @@ class MainController extends Controller
             $stats->setCharacter($character);
 
             /* ABILITIES */
-            $stats->setStrength($statsProps['abilities']['strength']);
-            $stats->setDexterity($statsProps['abilities']['dexterity']);
-            $stats->setConstitution($statsProps['abilities']['constitution']);
-            $stats->setIntelligence($statsProps['abilities']['intelligence']);
-            $stats->setWisdom($statsProps['abilities']['wisdom']);
-            $stats->setCharisma($statsProps['abilities']['charisma']);
+            $stats->setStrength(NotEmpty::getNotEmpty($statsProps['abilities']['strength'], 0 ));
+            $stats->setDexterity(NotEmpty::getNotEmpty($statsProps['abilities']['dexterity'], 0 ));
+            $stats->setConstitution(NotEmpty::getNotEmpty($statsProps['abilities']['constitution'], 0 ));
+            $stats->setIntelligence(NotEmpty::getNotEmpty($statsProps['abilities']['intelligence'], 0 ));
+            $stats->setWisdom(NotEmpty::getNotEmpty($statsProps['abilities']['wisdom'], 0 ));
+            $stats->setCharisma(NotEmpty::getNotEmpty($statsProps['abilities']['charisma'], 0 ));
 
             /* GENERAL */
             $stats->setHitPoints($statsProps['general']['hit_points']);
@@ -161,8 +161,8 @@ class MainController extends Controller
             $stats->setSpeed($statsProps['general']['speed']);
             $stats->setSpellResistance($statsProps['general']['spell_resistance']);
             $stats->setBaseAttackBonus(array_map('trim', explode('/', $statsProps['general']['base_attack_bonus'])));
-            $stats->setSpellSave(NotEmpty::getNotEmpty($statsProps['general']['spell_save'], 0));
-            $stats->setArcaneSpellFailure(NotEmpty::getNotEmpty($statsProps['general']['arcane_spell_failure'], 0));
+            $stats->setSpellSave($statsProps['general']['spell_save']);
+            $stats->setArcaneSpellFailure($statsProps['general']['arcane_spell_failure']);
 
             /* AC */
             $stats->setArmorBonus($statsProps['ac']['armor_bonus']);
@@ -346,62 +346,5 @@ class MainController extends Controller
         catch (Exception $ex) {
             return $ex->getMessage();
         }
-    }
-
-    private function generateCharacterJson(int $characterId): array
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $character = $em->getRepository('AppBundle:Characters')->find($characterId);
-        $stats = $em->getRepository('AppBundle:Stats')->findOneByCharacter($character);
-        $skills = $em->getRepository('AppBundle:CharacterSkills')->findByCharacter($character);
-
-        return array(
-            'character' => array(
-                'name' => $character->getName(),
-                'player' => $character->getPlayer(),
-                'race' => $character->getRace()->getId(),
-                'class' => $character->getClass()->getId(),
-                'alignment' => $character->getAlignment()->getId(),
-                'deity' => $character->getDeity()->getId(),
-                'size' => $character->getSize(),
-                'age' => $character->getAge(),
-                'gender' => $character->getGender(),
-                'height' => $character->getHeight(),
-                'weight' => $character->getWeight(),
-                'eyes' => $character->getEyes(),
-                'hair' => $character->getHair(),
-                'skin' => $character->getSkin(),
-            ),
-            'stats' => array(
-                'strength' => $stats->getStrength(),
-                'dexterity' => $stats->getDexterity(),
-                'constitution' => $stats->getConstitution(),
-                'intelligence' => $stats->getIntelligence(),
-                'wisdom' => $stats->getWisdom(),
-                'charisma' => $stats->getCharisma(),
-                'hit_points' => $stats->getHitPoints(),
-                'damage_reduction' => $stats->getDamageReduction(),
-                'speed' => $stats->getSpeed(),
-                'spell_resistance' => $stats->getSpellResistance(),
-                'base_attack_bonus' => $stats->getBaseAttackBonus(),
-                'armor_bonus' => $stats->getArmorBonus(),
-                'shield_bonus' => $stats->getShieldBonus(),
-                'size_modifier' => $stats->getSizeModifier(),
-                'natural_armor' => $stats->getNaturalArmor(),
-                'deflection_modifier' => $stats->getDeflectionModifier(),
-                'ac_misc_modifier' => $stats->getAcMiscModifier(),
-                'initiative_misc_modifier' => $stats->getInitiativeMiscModifier(),
-                'fortitude_base_save' => $stats->getFortitudeBaseSave(),
-                'fortitude_magic_modifier' => $stats->getFortitudeMagicModifier(),
-                'fortitude_misc_modifier' => $stats->getFortitudeMiscModifier(),
-                'reflex_base_save' => $stats->getReflexBaseSave(),
-                'reflex_magic_modifier' => $stats->getReflexMagicModifier(),
-                'reflex_misc_modifier' => $stats->getReflexMiscModifier(),
-                'will_base_save' => $stats->getWillBaseSave(),
-                'will_magic_modifier' => $stats->getWillMagicModifier(),
-                'will_misc_modifier' => $stats->getWillMiscModifier(),
-            ),
-        );
     }
 }
