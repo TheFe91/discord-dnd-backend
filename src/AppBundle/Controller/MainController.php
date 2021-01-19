@@ -89,14 +89,17 @@ class MainController extends Controller
         $accessCode = $parameters['access_code'];
 
         $em = $this->getDoctrine()->getManager();
+        $accessCodeEntity = $em->getRepository('AppBundle:AccessCodes')->findOneBy(array('code' => $accessCode));
 
-        if (count($em->getRepository('AppBundle:AccessCodes')->findOneBy(array('code' => $accessCode))) === 0) {
+        if (count($accessCodeEntity) === 0) {
             return Responder::generateError('Your code is invalid');
         }
 
         $result = self::saveCharacter($parameters);
 
         if (is_numeric($result)) {
+            $em->remove($accessCodeEntity);
+            $em->flush();
             return Responder::generateResponse(array('characterId' => $result));
         }
         else {

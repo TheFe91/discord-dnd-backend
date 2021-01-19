@@ -4,7 +4,7 @@ services:
     build:
       context: ./db
     environment:
-      - MYSQL_DATABASE=CharacterCreator
+      - MYSQL_DATABASE=DiscordDnD
       - MYSQL_USER=dev
       - MYSQL_PASSWORD=dev
       - MYSQL_ROOT_PASSWORD=root_psw

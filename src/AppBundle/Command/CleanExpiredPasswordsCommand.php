@@ -42,6 +42,6 @@ class CleanExpiredPasswordsCommand extends ContainerAwareCommand
             }
         }
 
-        $output->writeln("Cleanup complete! $cleaned passwords were removed");
+        $output->writeln("Cleanup complete! $cleaned access codes were removed");
     }
 }
