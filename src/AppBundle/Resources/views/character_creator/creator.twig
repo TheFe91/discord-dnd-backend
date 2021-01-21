@@ -1,293 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends '@App/base.html.twig' %}
 
-<head>
+{% block content %}
+    <form id="page_form">
+        <div class="container-fluid">
+            {% include '@App/character_creator/header.twig' %}
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+            <hr/>
+            <h3 class="mt-2">Character</h3>
+            {% include '@App/character_creator/character.twig' %}
 
-    <title>Discord D&D - Character Creator</title>
+            <hr/>
+            <h3 class="mt-2">Stats</h3>
+            {% include '@App/character_creator/stats/stats.twig' %}
 
-    <link href="{{ asset('bundles/app/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <hr/>
+            <h3 class="mt-2">Weapons & Skills</h3>
+            {% include '@App/character_creator/skills_and_weapons/skills_and_weapons.twig' %}
 
-    <style>
-        .modal-confirm {
-            color: #434e65;
-            width: 525px;
+            <hr />
+            <h3 class="mt-2">Gear and Items</h3>
+            {% include '@App/character_creator/gear_and_items.twig' %}
+
+            <hr />
+            <h3 class="mt-2">Feats and Special Abilities</h3>
+            {% include '@App/character_creator/feats_and_special_abilities.twig' %}
+
+            <hr />
+            <h3 class="mt-2">Spells</h3>
+            {% include '@App/character_creator/spells.twig' %}
+
+            <hr />
+            <h3 class="mt-2">Other</h3>
+            {% include '@App/character_creator/other.twig' %}
+        </div>
+    </form>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+
+        const ac_vals = $('.ac-vals');
+        const add_feat = $('#add-feat');
+        const add_gear = $('#add-gear');
+        const add_item = $('#add-item');
+        const add_language = $('#add-language');
+        const add_special_ability = $('#add-special-ability');
+        const add_spell = $('#add-spell');
+        const add_weapon = $('#add-weapon');
+        const cha_score = $('#cha-score');
+        const classes_skills = {{ classes_skills|json_encode|raw }};
+        const con_score = $('#con-score');
+        const dex_score = $('#dex-score');
+        const fortitude_ability_modifier = $('#fortitude_ability_modifier');
+        const fortitude_vals = $('.fortitude-vals');
+        const initiative_misc = $('#initiative_misc');
+        const int_score = $('#int-score');
+        const page_form = $('#page_form');
+        const player_class = $('#class');
+        const reflex_ability_modifier = $('#reflex_ability_modifier');
+        const reflex_vals = $('.reflex-vals');
+        const str_score = $('#str-score');
+        const submit = $('#submit');
+        const will_ability_modifier = $('#will_ability_modifier');
+        const will_vals = $('.will-vals');
+        const wis_score = $('#wis-score');
+
+        let feats = 0;
+        let gear = 0;
+        let items = 0;
+        let languages = 0;
+        let special_abilities = 0;
+        let spells = 0;
+        let weapons = 0;
+
+        const calcInitiative = () => {
+            $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
         }
-        .modal-confirm .modal-content {
-            padding: 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-        }
-        .modal-confirm .modal-header {
-            border-bottom: none;
-            position: relative;
-            text-align: center;
-            margin: -20px -20px 0;
-            border-radius: 5px 5px 0 0;
-            padding: 35px;
-        }
-        .modal-header-error {
-            background: #e85e6c;
-        }
-        .modal-header-success {
-            background: #67e85e;
-        }
-        .modal-confirm h4 {
-            text-align: center;
-            font-size: 36px;
-            margin: 10px 0;
-        }
-        .modal-confirm .form-control, .modal-confirm .btn {
-            min-height: 40px;
-            border-radius: 3px;
-        }
-        .modal-confirm .close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            color: #fff;
-            text-shadow: none;
-            opacity: 0.5;
-        }
-        .modal-confirm .close:hover {
-            opacity: 0.8;
-        }
-        .modal-confirm .icon-box {
-            color: #fff;
-            width: 95px;
-            height: 95px;
-            display: inline-block;
-            border-radius: 50%;
-            z-index: 9;
-            border: 5px solid #fff;
-            padding: 15px;
-            text-align: center;
-        }
-        .modal-confirm .icon-box i {
-            font-size: 58px;
-            margin: -2px 0 0 -2px;
-        }
-        .modal-confirm.modal-dialog {
-            margin-top: 80px;
-        }
-        .modal-confirm .btn, .modal-confirm .btn:active {
-            color: #fff;
-            border-radius: 4px;
-            background: #eeb711 !important;
-            text-decoration: none;
-            transition: all 0.4s;
-            line-height: normal;
-            margin-top: 10px;
-            padding: 6px 20px;
-            min-width: 150px;
-            border: none;
-        }
-        .modal-confirm .btn:hover, .modal-confirm .btn:focus {
-            background: #eda645 !important;
-            outline: none;
-        }
-    </style>
 
-</head>
+        const calcFortitude = () => {
+            let total = Number(fortitude_ability_modifier.text());
+            $.each(fortitude_vals, (_, el) => total += Number($(el).val()));
+            $('#fortitude').text(total);
+        };
 
-<body>
+        const calcReflex = () => {
+            let total = Number(reflex_ability_modifier.text());
+            $.each(reflex_vals, (_, el) => total += Number($(el).val()));
+            $('#reflex').text(total);
+        };
 
-    <div id="page-content">
+        const calcWill = () => {
+            let total = Number(will_ability_modifier.text());
+            $.each(will_vals, (_, el) => total += Number($(el).val()));
+            $('#will').text(total);
+        };
 
-        <form id="page_form">
-            <div class="container-fluid">
-                {% include '@App/character_creator/header.twig' %}
+        const calcAC = () => {
+            let total = 10 + Number(reflex_ability_modifier.text());
+            $.each(ac_vals, (_, el) => total += Number($(el).val()));
+            $('#ac').text(total);
+        };
 
-                <hr/>
-                <h3 class="mt-2">Character</h3>
-                {% include '@App/character_creator/character.twig' %}
+        const calcSkills = () => {
+            $.each($('.skills'), (_, el) => {
+                const row = $(el);
+                const keyAbility = row.data('ability-field-id');
+                const ranks = row.data('rank-field-id');
+                const misc = row.data('misc-field-id');
+                const skill = row.data('skill');
 
-                <hr/>
-                <h3 class="mt-2">Stats</h3>
-                {% include '@App/character_creator/stats/stats.twig' %}
+                $(`#${skill}`).text(Number($(`#${ranks}`).val()) + Number($(`#${misc}`).val()) + Number($(`#${keyAbility}`).text()));
+            });
+        };
 
-                <hr/>
-                <h3 class="mt-2">Weapons & Skills</h3>
-                {% include '@App/character_creator/skills_and_weapons/skills_and_weapons.twig' %}
-
-                <hr />
-                <h3 class="mt-2">Gear and Items</h3>
-                {% include '@App/character_creator/gear_and_items.twig' %}
-
-                <hr />
-                <h3 class="mt-2">Feats and Special Abilities</h3>
-                {% include '@App/character_creator/feats_and_special_abilities.twig' %}
-
-                <hr />
-                <h3 class="mt-2">Spells</h3>
-                {% include '@App/character_creator/spells.twig' %}
-
-                <hr />
-                <h3 class="mt-2">Other</h3>
-                {% include '@App/character_creator/other.twig' %}
-            </div>
-        </form>
-    </div>
-
-    {% include '@App/modal/errorModal.twig' %}
-    {% include '@App/modal/successModal.twig' %}
-
-<script src="{{ asset('bundles/app/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('bundles/app/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-<script>
-
-    const ac_vals = $('.ac-vals');
-    const add_feat = $('#add-feat');
-    const add_gear = $('#add-gear');
-    const add_item = $('#add-item');
-    const add_language = $('#add-language');
-    const add_special_ability = $('#add-special-ability');
-    const add_spell = $('#add-spell');
-    const add_weapon = $('#add-weapon');
-    const cha_score = $('#cha-score');
-    const classes_skills = {{ classes_skills|json_encode|raw }};
-    const con_score = $('#con-score');
-    const dex_score = $('#dex-score');
-    const fortitude_ability_modifier = $('#fortitude_ability_modifier');
-    const fortitude_vals = $('.fortitude-vals');
-    const initiative_misc = $('#initiative_misc');
-    const int_score = $('#int-score');
-    const page_form = $('#page_form');
-    const player_class = $('#class');
-    const reflex_ability_modifier = $('#reflex_ability_modifier');
-    const reflex_vals = $('.reflex-vals');
-    const str_score = $('#str-score');
-    const submit = $('#submit');
-    const will_ability_modifier = $('#will_ability_modifier');
-    const will_vals = $('.will-vals');
-    const wis_score = $('#wis-score');
-
-    let feats = 0;
-    let gear = 0;
-    let items = 0;
-    let languages = 0;
-    let special_abilities = 0;
-    let spells = 0;
-    let weapons = 0;
-
-    const calcInitiative = () => {
-        $('#initiative').text(Number($('#initiative_dex').text()) + Number(initiative_misc.val()));
-    }
-
-    const calcFortitude = () => {
-        let total = Number(fortitude_ability_modifier.text());
-        $.each(fortitude_vals, (_, el) => total += Number($(el).val()));
-        $('#fortitude').text(total);
-    };
-
-    const calcReflex = () => {
-        let total = Number(reflex_ability_modifier.text());
-        $.each(reflex_vals, (_, el) => total += Number($(el).val()));
-        $('#reflex').text(total);
-    };
-
-    const calcWill = () => {
-        let total = Number(will_ability_modifier.text());
-        $.each(will_vals, (_, el) => total += Number($(el).val()));
-        $('#will').text(total);
-    };
-
-    const calcAC = () => {
-        let total = 10 + Number(reflex_ability_modifier.text());
-        $.each(ac_vals, (_, el) => total += Number($(el).val()));
-        $('#ac').text(total);
-    };
-
-    const calcSkills = () => {
-        $.each($('.skills'), (_, el) => {
-            const row = $(el);
-            const keyAbility = row.data('ability-field-id');
-            const ranks = row.data('rank-field-id');
-            const misc = row.data('misc-field-id');
-            const skill = row.data('skill');
-
-            $(`#${skill}`).text(Number($(`#${ranks}`).val()) + Number($(`#${misc}`).val()) + Number($(`#${keyAbility}`).text()));
+        player_class.on('change', function() {
+            const class_skills = classes_skills[$(this).val()].map((class_skill) => Number(class_skill));
+            $('.skill_names').css('color', 'black').css('font-weight', 'normal');
+            $.each(class_skills, (_, el) => $(`#skills_${el}`).css('color', 'red').css('font-weight', 'bold'));
         });
-    };
 
-    player_class.on('change', function() {
-        const class_skills = classes_skills[$(this).val()].map((class_skill) => Number(class_skill));
-        $('.skill_names').css('color', 'black').css('font-weight', 'normal');
-        $.each(class_skills, (_, el) => $(`#skills_${el}`).css('color', 'red').css('font-weight', 'bold'));
-    });
+        $('.scores').on('input', function() {
+            const targetId = $(this).attr('id').replaceAll('-score', '-modifier');
+            const modifierValue = Math.floor((Number($(this).val()) - 10) / 2);
+            $(`#${targetId}`).text(modifierValue);
+        });
 
-    $('.scores').on('input', function() {
-        const targetId = $(this).attr('id').replaceAll('-score', '-modifier');
-        const modifierValue = Math.floor((Number($(this).val()) - 10) / 2);
-        $(`#${targetId}`).text(modifierValue);
-    });
+        str_score.on('input', function() {
+            const val = Math.floor((Number($(this).val()) - 10) / 2);
+            $('.str_modifiers').text(val);
+            calcSkills();
+        });
 
-    str_score.on('input', function() {
-        const val = Math.floor((Number($(this).val()) - 10) / 2);
-        $('.str_modifiers').text(val);
-        calcSkills();
-    });
+        dex_score.on('input', function() {
+            const val = Math.floor((Number($(this).val()) - 10) / 2);
+            $('#ac_dex').text(val);
+            $('#initiative_dex').text(val);
+            $('.dex_modifiers').text(val);
+            reflex_ability_modifier.text(val);
+            calcInitiative();
+            calcReflex();
+            calcAC();
+            calcSkills();
+        });
 
-    dex_score.on('input', function() {
-        const val = Math.floor((Number($(this).val()) - 10) / 2);
-        $('#ac_dex').text(val);
-        $('#initiative_dex').text(val);
-        $('.dex_modifiers').text(val);
-        reflex_ability_modifier.text(val);
-        calcInitiative();
-        calcReflex();
-        calcAC();
-        calcSkills();
-    });
+        con_score.on('input', function () {
+            const val = Math.floor((Number($(this).val()) - 10) / 2);
+            fortitude_ability_modifier.text(val);
+            $('.con_modifiers').text(val);
+            calcFortitude();
+            calcSkills();
+        });
 
-    con_score.on('input', function () {
-        const val = Math.floor((Number($(this).val()) - 10) / 2);
-        fortitude_ability_modifier.text(val);
-        $('.con_modifiers').text(val);
-        calcFortitude();
-        calcSkills();
-    });
+        int_score.on('input', function() {
+            const val = Math.floor((Number($(this).val()) - 10) / 2);
+            $('.int_modifiers').text(val);
+            calcSkills();
+        });
 
-    int_score.on('input', function() {
-        const val = Math.floor((Number($(this).val()) - 10) / 2);
-        $('.int_modifiers').text(val);
-        calcSkills();
-    });
+        wis_score.on('input', function () {
+            const val = Math.floor((Number($(this).val()) - 10) / 2);
+            $('.wis_modifiers').text(val);
+            will_ability_modifier.text(val);
+            calcWill();
+            calcSkills();
+        });
 
-    wis_score.on('input', function () {
-        const val = Math.floor((Number($(this).val()) - 10) / 2);
-        $('.wis_modifiers').text(val);
-        will_ability_modifier.text(val);
-        calcWill();
-        calcSkills();
-    });
+        cha_score.on('input', function() {
+            const val = Math.floor((Number($(this).val()) - 10) / 2);
+            $('.cha_modifiers').text(val);
+            calcSkills();
+        });
 
-    cha_score.on('input', function() {
-        const val = Math.floor((Number($(this).val()) - 10) / 2);
-        $('.cha_modifiers').text(val);
-        calcSkills();
-    });
+        ac_vals.on('input', calcAC);
 
-    ac_vals.on('input', calcAC);
+        initiative_misc.on('input', calcInitiative);
 
-    initiative_misc.on('input', calcInitiative);
+        fortitude_vals.on('input', calcFortitude);
 
-    fortitude_vals.on('input', calcFortitude);
+        reflex_vals.on('input', calcReflex);
 
-    reflex_vals.on('input', calcReflex);
+        will_vals.on('input', calcWill);
 
-    will_vals.on('input', calcWill);
-
-    add_gear.on('click', () => {
-        gear++;
-        const append = `
+        add_gear.on('click', () => {
+            gear++;
+            const append = `
             <tr>
                 <th>#${gear}</th>
             </tr>
@@ -324,12 +220,12 @@
                 </td>
             </tr>
         `;
-        $('#gear').append(append);
-    });
+            $('#gear').append(append);
+        });
 
-    add_item.on('click', () => {
-        items++;
-        const append = `
+        add_item.on('click', () => {
+            items++;
+            const append = `
             <tr>
                 <th>#${items}</th>
             </tr>
@@ -350,12 +246,12 @@
                 </td>
             </tr>
         `;
-        $('#items').append(append);
-    });
+            $('#items').append(append);
+        });
 
-    add_weapon.on('click', () => {
-        weapons++;
-        const append = `
+        add_weapon.on('click', () => {
+            weapons++;
+            const append = `
             <tr>
                 <th>#${weapons}</th>
             </tr>
@@ -388,12 +284,12 @@
                 </td>
             </tr>
         `;
-        $('#weapons').append(append);
-    });
+            $('#weapons').append(append);
+        });
 
-    add_feat.on('click', () => {
-        feats++;
-        const append = `
+        add_feat.on('click', () => {
+            feats++;
+            const append = `
             <tr>
                 <th>#${feats}</th>
             </tr>
@@ -411,12 +307,12 @@
                 </td>
             </tr>
         `;
-        $('#feats').append(append);
-    });
+            $('#feats').append(append);
+        });
 
-    add_special_ability.on('click', () => {
-        special_abilities++;
-        const append = `
+        add_special_ability.on('click', () => {
+            special_abilities++;
+            const append = `
             <tr>
                 <th>#${special_abilities}</th>
             </tr>
@@ -434,12 +330,12 @@
                 </td>
             </tr>
         `;
-        $('#special-abilities').append(append);
-    });
+            $('#special-abilities').append(append);
+        });
 
-    add_spell.on('click', () => {
-        spells++;
-        const append = `
+        add_spell.on('click', () => {
+            spells++;
+            const append = `
             <tr>
                 <th>#${spells}</th>
             </tr>
@@ -472,12 +368,12 @@
                 </td>
             </tr>
         `;
-        $('#spells').append(append);
-    });
+            $('#spells').append(append);
+        });
 
-    add_language.on('click', () => {
-        languages++;
-        const append = `
+        add_language.on('click', () => {
+            languages++;
+            const append = `
             <tr>
                 <th>#${languages}</th>
             </tr>
@@ -495,22 +391,22 @@
                 </td>
             </tr>
         `;
-        $('#languages').append(append);
-    });
+            $('#languages').append(append);
+        });
 
-    submit.on('click', () => {
-        if ($('#access_code').val() === '') {
-            $('#errorMessage').text('The access code is empty!');
-            $('#errorModal').modal('show');
-            return;
-        }
-        if ($('#race').val() === '' || $('#class').val() === '' || $('#alignment').val() === '' || $('#deity').val() === '') {
-            $('#errorMessage').text('Race, class, alignment and deity must NOT be empty!');
-            $('#errorModal').modal('show');
-            return;
-        }
-        if (!($('#base_attack_bonus').val().match(/[ 0-9+\/]/))) {
-            $('#errorMessage').html(`
+        submit.on('click', () => {
+            if ($('#access_code').val() === '') {
+                $('#errorMessage').text('The access code is empty!');
+                $('#errorModal').modal('show');
+                return;
+            }
+            if ($('#race').val() === '' || $('#class').val() === '' || $('#alignment').val() === '' || $('#deity').val() === '') {
+                $('#errorMessage').text('Race, class, alignment and deity must NOT be empty!');
+                $('#errorModal').modal('show');
+                return;
+            }
+            if (!($('#base_attack_bonus').val().match(/[ 0-9+\/]/))) {
+                $('#errorMessage').html(`
                 <span>The base attack bonus (BAB) can only contain:</span>
                 <ul>
                     <li>Numbers from 0 to 9</li>
@@ -519,28 +415,25 @@
                     <li>+ sign</li>
                 </ul>
             `);
-            $('#errorModal').modal('show');
-            return;
-        }
-
-        $.post(
-            '{{ url('characterSubmitted_url') }}',
-            page_form.serialize(),
-            ({ result, error, characterId }) => {
-                if (result === 'KO') {
-                    console.error(error);
-                    $('#errorMessage').text('An error occurred saving your character');
-                    $('#errorModal').modal('show');
-                }
-                else {
-                    $('#successMessage').html(`Your character id is: <strong>${characterId}</strong><br>Write it down, you won't have other oppurtunities to see it`);
-                    $('#successModal').modal('show');
-                }
+                $('#errorModal').modal('show');
+                return;
             }
-        );
-    });
-</script>
 
-</body>
-
-</html>
+            $.post(
+                '{{ url('characterSubmitted_url') }}',
+                page_form.serialize(),
+                ({ result, error, characterId }) => {
+                    if (result === 'KO') {
+                        console.error(error);
+                        $('#errorMessage').text('An error occurred saving your character');
+                        $('#errorModal').modal('show');
+                    }
+                    else {
+                        $('#successMessage').html(`Your character id is: <strong>${characterId}</strong><br>Write it down, you won't have other oppurtunities to see it`);
+                        $('#successModal').modal('show');
+                    }
+                }
+            );
+        });
+    </script>
+{% endblock %}
