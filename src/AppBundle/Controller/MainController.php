@@ -27,10 +27,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/character-creator")
      * @return Response|null
      */
-    public function indexAction(): ?Response
+    public function characterCreator(): ?Response
     {
         $em = $this->getDoctrine()->getManager();
         $classes = $em->getRepository('AppBundle:Classes')->findAll();
@@ -41,7 +41,7 @@ class MainController extends Controller
         }
 
         return $this->render(
-            '@App/creator.twig', [
+            '@App/character_creator/creator.twig', [
                 'classes_skills' => $classes_skills,
                 'races' => $em->getRepository('AppBundle:Races')->findAll(),
                 'classes' => $classes,
@@ -50,6 +50,15 @@ class MainController extends Controller
                 'skills' => $em->getRepository('AppBundle:Skills')->findAll(),
             ]
         );
+    }
+
+    /**
+     * @Route("/monster-builder")
+     * @return Response|null
+     */
+    public function monsterBuilder(): ?Response
+    {
+        return $this->render('@App/monster_builder/builder.twig');
     }
 
     /**

@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>D&D Bot Suite - Character Creator</title>
+    <title>Discord D&D - Character Creator</title>
 
     <link href="{{ asset('bundles/app/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -102,35 +102,35 @@
 
         <form id="page_form">
             <div class="container-fluid">
-                {% include '@App/header.twig' %}
+                {% include '@App/character_creator/header.twig' %}
 
                 <hr/>
                 <h3 class="mt-2">Character</h3>
-                {% include '@App/character.twig' %}
+                {% include '@App/character_creator/character.twig' %}
 
                 <hr/>
                 <h3 class="mt-2">Stats</h3>
-                {% include '@App/stats/stats.twig' %}
+                {% include '@App/character_creator/stats/stats.twig' %}
 
                 <hr/>
                 <h3 class="mt-2">Weapons & Skills</h3>
-                {% include '@App/skills_and_weapons/skills_and_weapons.twig' %}
+                {% include '@App/character_creator/skills_and_weapons/skills_and_weapons.twig' %}
 
                 <hr />
                 <h3 class="mt-2">Gear and Items</h3>
-                {% include '@App/gear_and_items.twig' %}
+                {% include '@App/character_creator/gear_and_items.twig' %}
 
                 <hr />
                 <h3 class="mt-2">Feats and Special Abilities</h3>
-                {% include '@App/feats_and_special_abilities.twig' %}
+                {% include '@App/character_creator/feats_and_special_abilities.twig' %}
 
                 <hr />
                 <h3 class="mt-2">Spells</h3>
-                {% include '@App/spells.twig' %}
+                {% include '@App/character_creator/spells.twig' %}
 
                 <hr />
                 <h3 class="mt-2">Other</h3>
-                {% include '@App/other.twig' %}
+                {% include '@App/character_creator/other.twig' %}
             </div>
         </form>
     </div>
